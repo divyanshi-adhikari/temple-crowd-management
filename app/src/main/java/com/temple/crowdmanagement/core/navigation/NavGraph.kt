@@ -2,6 +2,7 @@ package com.temple.crowdmanagement.core.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -42,7 +43,7 @@ fun MainAppContainer() {
         BottomNavItem(Screen.Emergency, Icons.Default.Sos),
         // Developer 1 (Core Pilgrim Journey)
         BottomNavItem(Screen.Dashboard, Icons.Default.Home),
-        BottomNavItem(Screen.Guide, Icons.Default.MenuBook),
+        BottomNavItem(Screen.Guide, Icons.AutoMirrored.Filled.MenuBook),
         BottomNavItem(Screen.Profile, Icons.Default.Person)
     )
 

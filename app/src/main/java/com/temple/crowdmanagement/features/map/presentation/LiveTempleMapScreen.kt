@@ -170,8 +170,8 @@ fun LiveTempleMapScreen() {
                 ) {
                     Icon(
                         imageVector = when (poi.type) {
-                            POIType.ENTRY_GATE -> Icons.Default.Login
-                            POIType.EXIT_GATE -> Icons.Default.Logout
+                            POIType.ENTRY_GATE -> Icons.AutoMirrored.Filled.Login
+                            POIType.EXIT_GATE -> Icons.AutoMirrored.Filled.Logout
                             POIType.PARKING -> Icons.Default.LocalParking
                             POIType.WASHROOM -> Icons.Default.Wc
                             POIType.MEDICAL -> Icons.Default.MedicalServices
