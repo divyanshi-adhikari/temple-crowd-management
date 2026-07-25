@@ -2,7 +2,7 @@ package com.temple.crowdmanagement.core.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.MenuBook
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -42,7 +42,7 @@ fun MainAppContainer() {
         BottomNavItem("map", "Map", Icons.Default.Map),
         BottomNavItem("queue", "Queue", Icons.Default.ConfirmationNumber),
         BottomNavItem("booking", "Booking", Icons.Default.QrCode2),
-        BottomNavItem("guide", "Guide", Icons.AutoMirrored.Filled.MenuBook),
+        BottomNavItem("guide", "Guide", Icons.Default.MenuBook),
         BottomNavItem("profile", "Profile", Icons.Default.Person),
         BottomNavItem("emergency", "SOS", Icons.Default.Sos)
     )
@@ -50,7 +50,10 @@ fun MainAppContainer() {
     Scaffold(
         bottomBar = {
             if (isAuthenticated) {
-                NavigationBar {
+                NavigationBar(
+                    containerColor = SpiritualDarkBg,
+                    contentColor = SandstoneGold
+                ) {
                     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
                     
                     bottomNavItems.forEach { item ->
@@ -90,7 +93,7 @@ fun MainAppContainer() {
             startDestination = if (isAuthenticated) "dashboard" else "auth",
             modifier = Modifier.padding(innerPadding)
         ) {
-            // Auth Routes
+            // ============ AUTH ROUTES ============
             composable("auth") {
                 var screen by remember { mutableStateOf("login") }
                 when (screen) {
@@ -120,8 +123,24 @@ fun MainAppContainer() {
                 }
             }
             
-            // Main Screens
-            composable("dashboard") { DashboardScreen() }
+            // ============ MAIN SCREENS WITH NAVIGATION ============
+            composable("dashboard") { 
+                DashboardScreen(
+                    onLiveMapClick = {
+                        navController.navigate("map")
+                    },
+                    onBookDarshanClick = {
+                        navController.navigate("booking")
+                    },
+                    onSOSClick = {
+                        navController.navigate("emergency")
+                    },
+                    onTempleGuideClick = {
+                        navController.navigate("guide")
+                    }
+                )
+            }
+            
             composable("map") { LiveTempleMapScreen() }
             composable("queue") { SmartQueueScreen() }
             composable("booking") { BookingScreen() }
