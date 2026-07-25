@@ -43,7 +43,7 @@ fun MainAppContainer() {
         BottomNavItem(Screen.Emergency, Icons.Default.Sos),
         // Developer 1 (Core Pilgrim Journey)
         BottomNavItem(Screen.Dashboard, Icons.Default.Home),
-        BottomNavItem(Screen.Guide, Icons.AutoMirrored.Filled.MenuBook),
+        BottomNavItem(Screen.Guide, Icons.Default.MenuBook),
         BottomNavItem(Screen.Profile, Icons.Default.Person)
     )
 
