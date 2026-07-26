@@ -26,8 +26,8 @@ fun CrowdPredictionCard(
         modifier = Modifier
             .fillMaxWidth()
             .shadow(
-                elevation = 6.dp,
-                shape = RoundedCornerShape(16.dp),
+                elevation = 8.dp,
+                shape = RoundedCornerShape(20.dp),
                 clip = false
             ),
         shape = RoundedCornerShape(16.dp),
@@ -38,7 +38,7 @@ fun CrowdPredictionCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp)
+                .padding(24.dp)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(text = "🤖", fontSize = 28.sp)

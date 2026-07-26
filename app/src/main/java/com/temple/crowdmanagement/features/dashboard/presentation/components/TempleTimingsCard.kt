@@ -24,8 +24,8 @@ fun TempleTimingsCard(
         modifier = Modifier
             .fillMaxWidth()
             .shadow(
-                elevation = 4.dp,
-                shape = RoundedCornerShape(16.dp),
+                elevation = 8.dp,
+                shape = RoundedCornerShape(20.dp),
                 clip = false
             ),
         shape = RoundedCornerShape(16.dp),
@@ -36,7 +36,7 @@ fun TempleTimingsCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(20.dp)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(text = "🕉", fontSize = 24.sp)

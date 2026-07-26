@@ -25,11 +25,11 @@ fun ActionsGrid(
         modifier = Modifier
             .fillMaxWidth()
             .shadow(
-                elevation = 4.dp,
+                elevation = 8.dp,
                 shape = RoundedCornerShape(16.dp),
                 clip = false
             ),
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color(0xFF1A0E0A)  // Dark Background
         )
@@ -37,11 +37,11 @@ fun ActionsGrid(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(20.dp)
         ) {
             Text(
                 text = "Quick Actions",
-                fontSize = 16.sp,
+                fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
             )

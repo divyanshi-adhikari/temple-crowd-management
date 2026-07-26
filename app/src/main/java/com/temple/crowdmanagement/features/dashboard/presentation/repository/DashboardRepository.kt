@@ -13,7 +13,7 @@ class DashboardRepository {
         val currentTime = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date())
         
         return DashboardUiState(
-            devoteeName = "Divyanshi",
+            devoteeName = "Devotee",
             isTempleOpen = true,
             crowdStatus = "Low",
             waitTime = "12 mins",

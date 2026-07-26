@@ -39,7 +39,7 @@ fun DashboardScreen(
                     .fillMaxSize()
                     .padding(paddingValues)
                     .background(SpiritualDarkBg),
-                contentPadding = PaddingValues(16.dp),
+                contentPadding = PaddingValues(20.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 // Header

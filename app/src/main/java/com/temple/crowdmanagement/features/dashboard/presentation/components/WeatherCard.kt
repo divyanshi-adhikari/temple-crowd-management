@@ -26,11 +26,11 @@ fun WeatherCard(
         modifier = Modifier
             .fillMaxWidth()
             .shadow(
-                elevation = 4.dp,
-                shape = RoundedCornerShape(16.dp),
+                elevation = 8.dp,
+                shape = RoundedCornerShape(20.dp),
                 clip = false
             ),
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
             containerColor = SpiritualDarkBg
         )
@@ -38,7 +38,7 @@ fun WeatherCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = icon, fontSize = 36.sp)

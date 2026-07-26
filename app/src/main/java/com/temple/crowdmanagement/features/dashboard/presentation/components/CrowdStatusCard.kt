@@ -73,7 +73,7 @@ fun CrowdStatusCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(24.dp)
+                .padding(28.dp)
         ) {
             // Header with dynamic icon
             Row(
