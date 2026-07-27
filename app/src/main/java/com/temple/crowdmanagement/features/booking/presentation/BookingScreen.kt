@@ -31,7 +31,6 @@ import com.temple.crowdmanagement.ui.theme.*
 fun BookingScreen(
     repository: BookingRepository = remember { BookingRepository() }
 ) {
-    var selectedTemple by remember { mutableStateOf(TempleSite.SOMNATH) }
     var selectedTab by remember { mutableIntStateOf(0) } // 0 = Book Slot, 1 = My Passes
     val userPasses by repository.userBookings.collectAsState()
 
@@ -40,7 +39,7 @@ fun BookingScreen(
     var devoteeName by remember { mutableStateOf("") }
     var showSuccessDialog by remember { mutableStateOf<BookingPass?>(null) }
 
-    val availableSlots = remember(selectedTemple) { repository.getAvailableSlots(selectedTemple) }
+    val availableSlots = remember { repository.getAvailableSlots(TempleSite.SOMNATH) }
 
     Column(
         modifier = Modifier
@@ -48,50 +47,23 @@ fun BookingScreen(
             .background(SpiritualDarkBg)
             .padding(16.dp)
     ) {
-        // Workspace Header Tag
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+        // Screen Header
+        Column {
             Text(
                 text = "Smart Darshan Booking",
                 style = MaterialTheme.typography.headlineLarge,
                 color = GoldAccent
             )
-            Surface(
-                color = SaffronPrimary.copy(alpha = 0.2f),
-                shape = RoundedCornerShape(12.dp)
-            ) {
-                Text(
-                    text = "DEV 2 WORKSPACE",
-                    color = SandstoneGold,
-                    fontSize = 11.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                )
-            }
+            Text(
+                text = "Somnath Temple · Veraval, Gujarat",
+                color = TextSecondary,
+                fontSize = 12.sp
+            )
         }
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        // Temple Selector Tabs
-        ScrollableTabRow(
-            selectedTabIndex = selectedTemple.ordinal,
-            containerColor = CardDarkBg,
-            contentColor = SandstoneGold,
-            edgePadding = 0.dp
-        ) {
-            TempleSite.values().forEach { temple ->
-                Tab(
-                    selected = selectedTemple == temple,
-                    onClick = { selectedTemple = temple },
-                    text = { Text(temple.displayName, fontSize = 13.sp) }
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
         // Toggle Tab: Book vs My Passes
         TabRow(
@@ -188,7 +160,7 @@ fun BookingScreen(
                                 Button(
                                     onClick = {
                                         val confirmedPass = repository.confirmBooking(
-                                            temple = selectedTemple,
+                                            temple = TempleSite.SOMNATH,
                                             slotTime = selectedSlot!!.timeLabel,
                                             devoteeCount = devoteeCount,
                                             name = devoteeName

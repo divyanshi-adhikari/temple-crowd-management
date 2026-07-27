@@ -28,7 +28,6 @@ fun SmartQueueScreen(
     engine: QueueEngine = remember { QueueEngine() }
 ) {
     val queueState by engine.activeQueue.collectAsState()
-    var selectedTemple by remember { mutableStateOf(TempleSite.SOMNATH) }
 
     Column(
         modifier = Modifier
@@ -37,35 +36,17 @@ fun SmartQueueScreen(
             .padding(16.dp)
     ) {
         // Workspace Header
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column {
-                Text(
-                    text = "Smart Virtual Queue",
-                    style = MaterialTheme.typography.headlineLarge,
-                    color = GoldAccent
-                )
-                Text(
-                    text = "Zero-Wait Queue Management",
-                    color = TextSecondary,
-                    fontSize = 12.sp
-                )
-            }
-            Surface(
-                color = SaffronPrimary.copy(alpha = 0.2f),
-                shape = RoundedCornerShape(12.dp)
-            ) {
-                Text(
-                    text = "DEV 2 WORKSPACE",
-                    color = SandstoneGold,
-                    fontSize = 11.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                )
-            }
+        Column {
+            Text(
+                text = "Smart Virtual Queue",
+                style = MaterialTheme.typography.headlineLarge,
+                color = GoldAccent
+            )
+            Text(
+                text = "Somnath Temple · Zero-Wait Queue Management",
+                color = TextSecondary,
+                fontSize = 12.sp
+            )
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -93,29 +74,10 @@ fun SmartQueueScreen(
                                 color = TextSecondary,
                                 fontSize = 13.sp
                             )
-                            Spacer(modifier = Modifier.height(16.dp))
-
-                            Text("Select Target Temple:", color = TextPrimary, fontWeight = FontWeight.Bold)
-                            Spacer(modifier = Modifier.height(8.dp))
-                            ScrollableTabRow(
-                                selectedTabIndex = selectedTemple.ordinal,
-                                containerColor = SurfaceVariantDark,
-                                contentColor = SandstoneGold,
-                                edgePadding = 0.dp
-                            ) {
-                                TempleSite.values().forEach { temple ->
-                                    Tab(
-                                        selected = selectedTemple == temple,
-                                        onClick = { selectedTemple = temple },
-                                        text = { Text(temple.displayName, fontSize = 12.sp) }
-                                    )
-                                }
-                            }
-
                             Spacer(modifier = Modifier.height(20.dp))
 
                             Button(
-                                onClick = { engine.joinQueue(selectedTemple) },
+                                onClick = { engine.joinQueue(TempleSite.SOMNATH) },
                                 colors = ButtonDefaults.buttonColors(containerColor = SaffronPrimary),
                                 modifier = Modifier.fillMaxWidth()
                             ) {

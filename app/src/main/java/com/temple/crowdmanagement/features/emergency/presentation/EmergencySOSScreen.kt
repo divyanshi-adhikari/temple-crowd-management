@@ -38,35 +38,17 @@ fun EmergencySOSScreen(
             .padding(16.dp)
     ) {
         // Header
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column {
-                Text(
-                    text = "Emergency & SOS",
-                    style = MaterialTheme.typography.headlineLarge,
-                    color = StatusRed
-                )
-                Text(
-                    text = "Instant First Responder Alerting",
-                    color = TextSecondary,
-                    fontSize = 12.sp
-                )
-            }
-            Surface(
-                color = SaffronPrimary.copy(alpha = 0.2f),
-                shape = RoundedCornerShape(12.dp)
-            ) {
-                Text(
-                    text = "DEV 2 WORKSPACE",
-                    color = SandstoneGold,
-                    fontSize = 11.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                )
-            }
+        Column {
+            Text(
+                text = "Emergency & SOS",
+                style = MaterialTheme.typography.headlineLarge,
+                color = StatusRed
+            )
+            Text(
+                text = "Somnath Temple · Instant First Responder Alerting",
+                color = TextSecondary,
+                fontSize = 12.sp
+            )
         }
 
         Spacer(modifier = Modifier.height(12.dp))

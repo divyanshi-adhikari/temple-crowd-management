@@ -26,9 +26,8 @@ import com.temple.crowdmanagement.ui.theme.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LiveTempleMapScreen() {
-    var selectedTemple by remember { mutableStateOf(TempleSite.SOMNATH) }
-    val heatZones = remember(selectedTemple) { TempleZoneData.getZonesForTemple(selectedTemple) }
-    val pois = remember(selectedTemple) { TempleZoneData.getPOIsForTemple(selectedTemple) }
+    val heatZones = remember { TempleZoneData.getZonesForTemple(TempleSite.SOMNATH) }
+    val pois = remember { TempleZoneData.getPOIsForTemple(TempleSite.SOMNATH) }
 
     var visiblePoiTypes by remember {
         mutableStateOf(POIType.values().toSet())
@@ -44,53 +43,17 @@ fun LiveTempleMapScreen() {
             .padding(16.dp)
     ) {
         // Header
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column {
-                Text(
-                    text = "Live Temple Heatmap",
-                    style = MaterialTheme.typography.headlineLarge,
-                    color = GoldAccent
-                )
-                Text(
-                    text = "Real-time AI Crowd Density & POI Radar",
-                    color = TextSecondary,
-                    fontSize = 12.sp
-                )
-            }
-            Surface(
-                color = SaffronPrimary.copy(alpha = 0.2f),
-                shape = RoundedCornerShape(12.dp)
-            ) {
-                Text(
-                    text = "DEV 2 WORKSPACE",
-                    color = SandstoneGold,
-                    fontSize = 11.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        // Temple Selector Bar
-        ScrollableTabRow(
-            selectedTabIndex = selectedTemple.ordinal,
-            containerColor = CardDarkBg,
-            contentColor = SandstoneGold,
-            edgePadding = 0.dp
-        ) {
-            TempleSite.values().forEach { temple ->
-                Tab(
-                    selected = selectedTemple == temple,
-                    onClick = { selectedTemple = temple },
-                    text = { Text(temple.displayName, fontSize = 13.sp) }
-                )
-            }
+        Column {
+            Text(
+                text = "Live Temple Heatmap",
+                style = MaterialTheme.typography.headlineLarge,
+                color = GoldAccent
+            )
+            Text(
+                text = "Somnath Temple · Real-time AI Crowd Density",
+                color = TextSecondary,
+                fontSize = 12.sp
+            )
         }
 
         Spacer(modifier = Modifier.height(8.dp))

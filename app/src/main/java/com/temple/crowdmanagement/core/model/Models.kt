@@ -4,10 +4,7 @@ import androidx.compose.ui.graphics.Color
 import java.util.UUID
 
 enum class TempleSite(val displayName: String, val location: String, val imageTag: String) {
-    SOMNATH("Somnath Temple", "Veraval, Gujarat", "somnath"),
-    DWARKA("Dwarkadhish Temple", "Dwarka, Gujarat", "dwarka"),
-    AMBAJI("Ambaji Shrine", "Banaskantha, Gujarat", "ambaji"),
-    PAVAGADH("Kalika Mata Temple", "Pavagadh, Panchmahal", "pavagadh")
+    SOMNATH("Somnath Temple", "Veraval, Gujarat", "somnath")
 }
 
 data class DarshanSlot(

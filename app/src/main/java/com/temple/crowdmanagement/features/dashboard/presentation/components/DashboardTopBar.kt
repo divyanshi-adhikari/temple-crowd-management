@@ -18,13 +18,13 @@ fun DashboardTopBar() {
         title = {
             Column {
                 Text(
-                    text = "🛕 Dwarkadhish",
+                    text = "🛕 Somnath Temple",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = SaffronPrimary
                 )
                 Text(
-                    text = "Dwarka, Gujarat",
+                    text = "Veraval, Gujarat",
                     fontSize = 12.sp,
                     color = TextSecondary
                 )

@@ -1,13 +1,21 @@
 package com.temple.crowdmanagement.core.navigation
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -37,25 +45,46 @@ fun MainAppContainer() {
     val navController = rememberNavController()
     var isAuthenticated by remember { mutableStateOf(false) }
 
+    // Clean 4-item nav (Guide lives inside Dashboard quick actions)
     val bottomNavItems = listOf(
-        BottomNavItem("dashboard", "Home", Icons.Default.Home),
-        BottomNavItem("map", "Map", Icons.Default.Map),
-        BottomNavItem("queue", "Queue", Icons.Default.ConfirmationNumber),
-        BottomNavItem("booking", "Booking", Icons.Default.QrCode2),
-        BottomNavItem("guide", "Guide", Icons.Default.MenuBook),
-        BottomNavItem("profile", "Profile", Icons.Default.Person),
-        BottomNavItem("emergency", "SOS", Icons.Default.Sos)
+        BottomNavItem("dashboard", "Home",    Icons.Default.Home),
+        BottomNavItem("map",       "Map",     Icons.Default.Map),
+        BottomNavItem("queue",     "Queue",   Icons.Default.ConfirmationNumber),
+        BottomNavItem("booking",   "Booking", Icons.Default.QrCode2),
+        BottomNavItem("profile",   "Profile", Icons.Default.Person)
     )
 
+    val bottomNavRoutes = bottomNavItems.map { it.route }.toSet() + setOf("guide")
+
     Scaffold(
+        floatingActionButton = {
+            if (isAuthenticated) {
+                FloatingActionButton(
+                    onClick = { navController.navigate("emergency") },
+                    containerColor = StatusRed,
+                    contentColor = Color.White,
+                    shape = CircleShape,
+                    modifier = Modifier.size(62.dp)
+                ) {
+                    Icon(
+                        Icons.Default.Sos,
+                        contentDescription = "Emergency SOS",
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
+            }
+        },
+        floatingActionButtonPosition = FabPosition.End,
         bottomBar = {
             if (isAuthenticated) {
                 NavigationBar(
                     containerColor = SpiritualDarkBg,
-                    contentColor = SandstoneGold
+                    contentColor = SandstoneGold,
+                    tonalElevation = 8.dp
                 ) {
-                    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
-                    
+                    val currentRoute =
+                        navController.currentBackStackEntryAsState().value?.destination?.route
+
                     bottomNavItems.forEach { item ->
                         NavigationBarItem(
                             selected = currentRoute == item.route,
@@ -65,23 +94,30 @@ fun MainAppContainer() {
                                         saveState = true
                                     }
                                     launchSingleTop = true
-                                    restoreState = true
+                                    restoreState    = true
                                 }
                             },
-                            icon = { 
+                            icon = {
                                 Icon(
-                                    item.icon, 
+                                    item.icon,
                                     contentDescription = item.title,
-                                    tint = if (currentRoute == item.route) SaffronPrimary else TextSecondary
+                                    tint = if (currentRoute == item.route) SaffronPrimary
+                                           else TextSecondary
                                 )
                             },
-                            label = { 
+                            label = {
                                 Text(
-                                    item.title, 
+                                    item.title,
                                     fontSize = 10.sp,
-                                    color = if (currentRoute == item.route) SaffronPrimary else TextSecondary
+                                    fontWeight = if (currentRoute == item.route) FontWeight.Bold
+                                                 else FontWeight.Normal,
+                                    color = if (currentRoute == item.route) SaffronPrimary
+                                            else TextSecondary
                                 )
-                            }
+                            },
+                            colors = NavigationBarItemDefaults.colors(
+                                indicatorColor = SaffronPrimary.copy(alpha = 0.15f)
+                            )
                         )
                     }
                 }
@@ -98,14 +134,14 @@ fun MainAppContainer() {
                 var screen by remember { mutableStateOf("login") }
                 when (screen) {
                     "login" -> LoginScreen(
-                        onLoginSuccess = { 
+                        onLoginSuccess = {
                             isAuthenticated = true
                             navController.navigate("dashboard") {
                                 popUpTo("auth") { inclusive = true }
                             }
                         },
-                        onNavigateToSignUp = { screen = "signup" },
-                        onNavigateToLanguage = { screen = "language" }
+                        onNavigateToSignUp     = { screen = "signup" },
+                        onNavigateToLanguage   = { screen = "language" }
                     )
                     "signup" -> SignupScreen(
                         onSignUpSuccess = {
@@ -118,35 +154,27 @@ fun MainAppContainer() {
                     )
                     "language" -> LanguageScreen(
                         onLanguageSelected = { screen = "login" },
-                        onBack = { screen = "login" }
+                        onBack             = { screen = "login" }
                     )
                 }
             }
-            
-            // ============ MAIN SCREENS WITH NAVIGATION ============
-            composable("dashboard") { 
+
+            // ============ MAIN SCREENS ============
+            composable("dashboard") {
                 DashboardScreen(
-                    onLiveMapClick = {
-                        navController.navigate("map")
-                    },
-                    onBookDarshanClick = {
-                        navController.navigate("booking")
-                    },
-                    onSOSClick = {
-                        navController.navigate("emergency")
-                    },
-                    onTempleGuideClick = {
-                        navController.navigate("guide")
-                    }
+                    onLiveMapClick      = { navController.navigate("map")       },
+                    onBookDarshanClick  = { navController.navigate("booking")   },
+                    onSOSClick          = { navController.navigate("emergency") },
+                    onTempleGuideClick  = { navController.navigate("guide")     }
                 )
             }
-            
-            composable("map") { LiveTempleMapScreen() }
-            composable("queue") { SmartQueueScreen() }
-            composable("booking") { BookingScreen() }
-            composable("guide") { GuideScreen() }
-            composable("profile") { ProfileScreen() }
-            composable("emergency") { EmergencySOSScreen() }
+
+            composable("map")       { LiveTempleMapScreen() }
+            composable("queue")     { SmartQueueScreen()    }
+            composable("booking")   { BookingScreen()       }
+            composable("guide")     { GuideScreen()         }
+            composable("profile")   { ProfileScreen()       }
+            composable("emergency") { EmergencySOSScreen()  }
         }
     }
 }

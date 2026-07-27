@@ -37,7 +37,7 @@ fun HeaderSection(
                 color = SaffronPrimary  
             )
             Text(
-                text = "Today is a blessed day at Dwarkadhish Temple",
+                text = "Today is a blessed day at Somnath Temple",
                 fontSize = 14.sp,
                 color = TextSecondary,  
                 modifier = Modifier.padding(top = 4.dp)
