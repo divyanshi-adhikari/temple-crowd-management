@@ -324,7 +324,7 @@ fun SlotItemCard(
             Spacer(modifier = Modifier.height(8.dp))
 
             LinearProgressIndicator(
-                progress = { slot.percentageFull / 100f },
+                progress = slot.percentageFull / 100f,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(6.dp)
