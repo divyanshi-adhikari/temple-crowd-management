@@ -113,7 +113,7 @@ fun MainAppContainer() {
                             },
                             colors = NavigationBarItemDefaults.colors(
                                 indicatorColor         = SaffronPrimary,
-                                selectedIconColor      = Color.Black,
+                                selectedIconColor      = Color.White,
                                 unselectedIconColor    = TextSecondary,
                                 selectedTextColor      = SaffronPrimary,
                                 unselectedTextColor    = TextSecondary

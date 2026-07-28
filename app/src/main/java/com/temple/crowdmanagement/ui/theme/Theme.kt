@@ -11,14 +11,14 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-private val DarkColorScheme = darkColorScheme(
-    primary          = SaffronPrimary,
-    onPrimary        = Color.Black,
+private val CustomColorScheme = darkColorScheme(
+    primary          = SaffronPrimary,          // Heritage maroon
+    onPrimary        = Color.White,
     primaryContainer = ElevatedSurface,
-    secondary        = SandstoneGold,
-    onSecondary      = Color.Black,
+    secondary        = GoldAccent,              // Warm gold
+    onSecondary      = Color.White,
     tertiary         = StatusGreen,
-    onTertiary       = Color.Black,
+    onTertiary       = Color.White,
     background       = SpiritualDarkBg,
     onBackground     = TextPrimary,
     surface          = CardDarkBg,
@@ -35,18 +35,21 @@ fun TempleTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colorScheme = DarkColorScheme
+    val colorScheme = CustomColorScheme
     val view = LocalView.current
 
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as? Activity)?.window
             window?.let {
-                // Transparent status bar — match the deep black top
-                it.statusBarColor = SpiritualDarkBg.toArgb()
-                WindowCompat.getInsetsController(it, view).isAppearanceLightStatusBars = false
-                // Also match nav bar
+                // Status bar matches the maroon top bar
+                it.statusBarColor = SaffronDark.toArgb()
+                val insetsController = WindowCompat.getInsetsController(it, view)
+                insetsController.isAppearanceLightStatusBars = false // White text/icons on dark maroon status bar
+                
+                // Navigation bar matches the warm sand/cream bg
                 it.navigationBarColor = SpiritualDarkBg.toArgb()
+                insetsController.isAppearanceLightNavigationBars = true // Dark icons on light sand nav bar
             }
         }
     }

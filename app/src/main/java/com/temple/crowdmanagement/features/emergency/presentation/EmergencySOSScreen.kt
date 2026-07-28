@@ -15,6 +15,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -35,82 +36,101 @@ fun EmergencySOSScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(SpiritualDarkBg)
-            .padding(16.dp)
     ) {
-        // Header
-        Column {
-            Text(
-                text = "⚑  SOMNATH TEMPLE · SAFETY SYSTEM",
-                color = SaffronPrimary,
-                fontSize = 11.sp,
-                fontWeight = FontWeight.Bold,
-                letterSpacing = 0.8.sp
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "Emergency & SOS",
-                style = MaterialTheme.typography.headlineLarge,
-                color = StatusRed
-            )
-            Text(
-                text = "Instant first responder alerting",
-                color = TextSecondary,
-                fontSize = 12.sp
-            )
-        }
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        // Offline Network Toggle Simulation Card
-        Row(
+        // Maroon header — emergency screens share the same brand header style
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(CardDarkBg, RoundedCornerShape(12.dp))
-                .padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    imageVector = if (isOfflineMode) Icons.Default.WifiOff else Icons.Default.Wifi,
-                    contentDescription = null,
-                    tint = if (isOfflineMode) StatusOrange else StatusGreen
+                .background(
+                    Brush.verticalGradient(
+                        listOf(SaffronDark, SaffronPrimary)
+                    )
                 )
-                Spacer(modifier = Modifier.width(12.dp))
-                Column {
-                    Text(
-                        text = if (isOfflineMode) "Network Offline (Mesh Protocol Active)" else "Network Online (Cloud Dispatch)",
-                        fontWeight = FontWeight.Bold,
-                        color = TextPrimary,
-                        fontSize = 13.sp
-                    )
-                    Text(
-                        text = if (isOfflineMode) "SOS will broadcast via BLE peer-to-peer mesh" else "Direct high-speed cellular relay",
-                        color = TextSecondary,
-                        fontSize = 11.sp
-                    )
-                }
+                .padding(top = 48.dp, bottom = 14.dp, start = 20.dp, end = 20.dp)
+        ) {
+            Column {
+                Text(
+                    text = "Emergency & SOS",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+                Text(
+                    text = "Instant first responder dispatch protocol",
+                    fontSize = 12.sp,
+                    color = Color.White.copy(alpha = 0.75f)
+                )
             }
-            Switch(
-                checked = isOfflineMode,
-                onCheckedChange = { isOfflineMode = it },
-                colors = SwitchDefaults.colors(checkedThumbColor = StatusOrange)
-            )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
+        // Single flat scrollable LazyColumn to avoid scroll nesting crash
         LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Panic SOS Big Button Item
+            // Offline Network Toggle Simulation Card
             item {
                 Card(
                     colors = CardDefaults.cardColors(containerColor = CardDarkBg),
+                    shape = RoundedCornerShape(16.dp),
+                    elevation = CardDefaults.cardElevation(0.dp)
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Icon(
+                                imageVector = if (isOfflineMode) Icons.Default.WifiOff else Icons.Default.Wifi,
+                                contentDescription = null,
+                                tint = if (isOfflineMode) StatusOrange else StatusGreen,
+                                modifier = Modifier.size(24.dp)
+                            )
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Column {
+                                Text(
+                                    text = if (isOfflineMode) "Network Offline (Mesh Active)" else "Network Online (Cloud Dispatch)",
+                                    fontWeight = FontWeight.Bold,
+                                    color = TextPrimary,
+                                    fontSize = 13.sp
+                                )
+                                Text(
+                                    text = if (isOfflineMode) "SOS broadcasts via P2P Bluetooth mesh" else "Direct high-speed cellular relay",
+                                    color = TextSecondary,
+                                    fontSize = 11.sp
+                                )
+                            }
+                        }
+                        Switch(
+                            checked = isOfflineMode,
+                            onCheckedChange = { isOfflineMode = it },
+                            colors = SwitchDefaults.colors(
+                                checkedThumbColor = Color.White,
+                                checkedTrackColor = StatusOrange,
+                                uncheckedThumbColor = TextSecondary,
+                                uncheckedTrackColor = SurfaceVariantDark
+                            )
+                        )
+                    }
+                }
+            }
+
+            // Panic SOS Big Button Item (Kept large, round, and red)
+            item {
+                Card(
+                    colors = CardDefaults.cardColors(containerColor = CardDarkBg),
+                    shape = RoundedCornerShape(20.dp),
+                    elevation = CardDefaults.cardElevation(0.dp),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .border(2.dp, StatusRed.copy(alpha = 0.5f), RoundedCornerShape(20.dp))
+                        .border(1.dp, StatusRed.copy(alpha = 0.3f), RoundedCornerShape(20.dp))
                 ) {
                     Column(
                         modifier = Modifier.padding(20.dp),
@@ -120,11 +140,12 @@ fun EmergencySOSScreen(
                             text = "PRESS FOR PANIC SOS",
                             fontWeight = FontWeight.Bold,
                             color = StatusRed,
-                            fontSize = 16.sp
+                            fontSize = 15.sp,
+                            letterSpacing = 0.5.sp
                         )
-                        Spacer(modifier = Modifier.height(16.dp))
+                        Spacer(modifier = Modifier.height(20.dp))
 
-                        // Large Panic Circle
+                        // Large Panic Circle Button
                         Box(
                             modifier = Modifier
                                 .size(140.dp)
@@ -151,11 +172,13 @@ fun EmergencySOSScreen(
                             }
                         }
 
-                        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(16.dp))
                         Text(
                             text = "Dispatches GPS location & alerts nearby police & medical teams",
                             color = TextSecondary,
-                            fontSize = 12.sp
+                            fontSize = 12.sp,
+                            modifier = Modifier.padding(horizontal = 8.dp),
+                            textAlign = androidx.compose.ui.text.style.TextAlign.Center
                         )
                     }
                 }
@@ -165,8 +188,10 @@ fun EmergencySOSScreen(
             item {
                 Text(
                     text = "Specific Category Emergency Triggers",
-                    style = MaterialTheme.typography.titleLarge,
-                    color = TextPrimary
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TextPrimary,
+                    modifier = Modifier.padding(top = 4.dp, bottom = 2.dp)
                 )
             }
 
@@ -207,7 +232,7 @@ fun EmergencySOSScreen(
                     CategorySosCard(
                         title = "Lost Person",
                         icon = Icons.Default.PersonSearch,
-                        color = SandstoneGold,
+                        color = GoldAccent,
                         modifier = Modifier.weight(1f),
                         onClick = { activeTriggerAlert = engine.triggerSOS("LOST CHILD / ELDERLY", !isOfflineMode) }
                     )
@@ -219,37 +244,41 @@ fun EmergencySOSScreen(
                 item {
                     Text(
                         text = "Dispatched Emergency Log",
-                        style = MaterialTheme.typography.titleLarge,
-                        color = GoldAccent
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TextPrimary,
+                        modifier = Modifier.padding(top = 8.dp)
                     )
                 }
 
                 items(alerts) { alert ->
                     Card(
-                        colors = CardDefaults.cardColors(containerColor = SurfaceVariantDark),
-                        modifier = Modifier.fillMaxWidth()
+                        colors = CardDefaults.cardColors(containerColor = CardDarkBg),
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp)
                     ) {
                         Column(modifier = Modifier.padding(12.dp)) {
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                Text(alert.id, fontWeight = FontWeight.Bold, color = StatusRed)
+                                Text(alert.id, fontWeight = FontWeight.Bold, color = StatusRed, fontSize = 13.sp)
                                 Text(alert.timestamp, color = TextSecondary, fontSize = 11.sp)
                             }
-                            Text(alert.alertType, fontWeight = FontWeight.Bold, color = TextPrimary)
-                            Text(alert.location, color = TextSecondary, fontSize = 11.sp)
                             Spacer(modifier = Modifier.height(4.dp))
+                            Text(alert.alertType, fontWeight = FontWeight.Bold, color = TextPrimary, fontSize = 13.sp)
+                            Text(alert.location, color = TextSecondary, fontSize = 11.sp)
+                            Spacer(modifier = Modifier.height(8.dp))
                             Surface(
-                                color = if (alert.isOfflineMesh) StatusOrange.copy(alpha = 0.2f) else StatusGreen.copy(alpha = 0.2f),
-                                shape = RoundedCornerShape(4.dp)
+                                color = if (alert.isOfflineMesh) StatusOrange.copy(alpha = 0.15f) else StatusGreen.copy(alpha = 0.15f),
+                                shape = RoundedCornerShape(6.dp)
                             ) {
                                 Text(
                                     alert.status,
                                     color = if (alert.isOfflineMesh) StatusOrange else StatusGreen,
                                     fontSize = 10.sp,
                                     fontWeight = FontWeight.Bold,
-                                    modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                                 )
                             }
                         }
@@ -268,7 +297,7 @@ fun EmergencySOSScreen(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(Icons.Default.Warning, contentDescription = null, tint = StatusRed)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("EMERGENCY SIGNAL BROADCAST!", color = StatusRed, fontWeight = FontWeight.Bold)
+                    Text("EMERGENCY SIGNAL SENT", color = StatusRed, fontWeight = FontWeight.Bold, fontSize = 18.sp)
                 }
             },
             text = {
@@ -276,11 +305,11 @@ fun EmergencySOSScreen(
                     Text("Alert Type: ${alert.alertType}", fontWeight = FontWeight.Bold, color = TextPrimary)
                     Text("Location: ${alert.location}", color = TextSecondary, fontSize = 12.sp)
                     Spacer(modifier = Modifier.height(12.dp))
-                    Text("Status: ${alert.status}", color = SandstoneGold, fontWeight = FontWeight.SemiBold, fontSize = 12.sp)
+                    Text("Status: ${alert.status}", color = GoldAccent, fontWeight = FontWeight.SemiBold, fontSize = 12.sp)
                     if (alert.isOfflineMesh) {
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            "📱 Offline Mesh Mode: Signal broadcasting to nearest crowd marshal's phone via Bluetooth Low Energy packet relay.",
+                            "📱 Offline Mesh Mode: Signal broadcasting to nearest crowd marshal's phone via BLE P2P relay.",
                             color = StatusOrange,
                             fontSize = 11.sp
                         )
@@ -292,7 +321,7 @@ fun EmergencySOSScreen(
                     onClick = { activeTriggerAlert = null },
                     colors = ButtonDefaults.buttonColors(containerColor = StatusRed)
                 ) {
-                    Text("ACKNOWLEDGE & STAY CALM")
+                    Text("ACKNOWLEDGE & STAY CALM", color = Color.White)
                 }
             }
         )
@@ -310,8 +339,9 @@ fun CategorySosCard(
     Card(
         colors = CardDefaults.cardColors(containerColor = CardDarkBg),
         modifier = modifier
-            .border(1.dp, color.copy(alpha = 0.5f), RoundedCornerShape(12.dp))
-            .clickable { onClick() }
+            .border(1.dp, color.copy(alpha = 0.2f), RoundedCornerShape(12.dp))
+            .clickable { onClick() },
+        shape = RoundedCornerShape(12.dp)
     ) {
         Column(
             modifier = Modifier.padding(16.dp),

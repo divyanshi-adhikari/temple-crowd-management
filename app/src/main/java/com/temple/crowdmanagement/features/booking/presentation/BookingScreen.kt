@@ -45,33 +45,41 @@ fun BookingScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(SpiritualDarkBg)
-            .padding(16.dp)
     ) {
-        // Screen Header
-        Column {
-            Text(
-                text = "⚑  SOMNATH TEMPLE · DARSHAN BOOKING",
-                color = SaffronPrimary,
-                fontSize = 11.sp,
-                fontWeight = FontWeight.Bold,
-                letterSpacing = 0.8.sp
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "Smart Darshan Booking",
-                style = MaterialTheme.typography.headlineLarge,
-                color = TextPrimary
-            )
-            Text(
-                text = "Reserve your sacred Darshan slot",
-                color = TextSecondary,
-                fontSize = 12.sp
-            )
+        // Maroon gradient top bar
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(
+                    androidx.compose.ui.graphics.Brush.verticalGradient(
+                        listOf(SaffronDark, SaffronPrimary)
+                    )
+                )
+                .padding(top = 48.dp, bottom = 14.dp, start = 20.dp, end = 20.dp)
+        ) {
+            Column {
+                Text(
+                    text = "Smart Darshan Booking",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = androidx.compose.ui.graphics.Color.White
+                )
+                Text(
+                    text = "Reserve your sacred Darshan slot",
+                    fontSize = 12.sp,
+                    color = androidx.compose.ui.graphics.Color.White.copy(alpha = 0.75f)
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        Spacer(modifier = Modifier.height(4.dp))
+        // Content area with horizontal padding
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp)
+        ) {
 
         // Toggle Tab: Book vs My Passes
         TabRow(
@@ -257,6 +265,7 @@ fun BookingScreen(
             }
         )
     }
+    }
 }
 
 @Composable
@@ -375,3 +384,4 @@ fun PassCardItem(pass: BookingPass) {
         }
     }
 }
+

@@ -2,46 +2,50 @@ package com.temple.crowdmanagement.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// =========== SOMNATH TEMPLE — DARK LUXURY PALETTE ===========
-// Inspired by: Deep cosmic night sky + divine golden sanctum
+// ── SOMNATH TEMPLE  |  WARM LIGHT / SLATE HYBRID PALETTE ─────────
+// Inspired by: Serene sand/cream temples, rich heritage maroon & modern slate cards.
+// Move away from neon dark mode to a premium, warm light hybrid interface.
 
-// --- Backgrounds (Deep Navy-Black) ---
-val SpiritualDarkBg      = Color(0xFF0D0B14)   // Near-black with purple depth — main screen bg
-val CardDarkBg           = Color(0xFF1C1732)   // Deep purple-navy — card surfaces
-val SurfaceVariantDark   = Color(0xFF261F3A)   // Mid purple — inner row highlights
-val ElevatedSurface      = Color(0xFF2D2548)   // Elevated cards / dialogs
+// ── Backgrounds (Warm Sand & Cream) ─────────────────────────────
+val SpiritualDarkBg    = Color(0xFFF7F4EB)   // Warm cream/sand background (replaces dark bg)
+val CardDarkBg         = Color(0xFFFFFFFF)   // Pure white card surfaces
+val SurfaceVariantDark = Color(0xFFEAE8E3)   // Light slate/sand pill background
+val ElevatedSurface    = Color(0xFFFFFFFF)   // White elevated surface / dialogs
 
-// --- Primary Gold / Saffron Palette ---
-val SaffronPrimary       = Color(0xFFF5A623)   // Warm amber saffron — buttons, active elements
-val SaffronLight         = Color(0xFFFFBF5C)   // Light amber glow
-val SaffronDark          = Color(0xFFB87D1C)   // Deep amber — pressed states
+// ── Brand — Heritage Maroon (Top bar & primary CTA) ─────────────
+val SaffronPrimary     = Color(0xFF7A1E29)   // Rich heritage temple maroon (primary brand)
+val SaffronLight       = Color(0xFF9E2C3A)   // Lighter maroon tint
+val SaffronDark        = Color(0xFF5E151E)   // Deep maroon for status bars / shadows
 
-// --- Gold Accents ---
-val SandstoneGold        = Color(0xFFD4AF37)   // Classic gold — secondary labels, icons
-val GoldAccent           = Color(0xFFE8C96D)   // Bright warm gold — heading text, tokens
-val GoldMuted            = Color(0xFF9A7B2F)   // Muted gold — tertiary info
+// ── Accent Slate (Heatmap & secondary actions) ──────────────────
+val AccentSlate        = Color(0xFF2F3E46)   // Slate gray-blue for actions & headers
 
-// --- Text ---
-val TextPrimary          = Color(0xFFFFFFFF)   // Pure white — primary body text
-val TextSecondary        = Color(0xFF9A90B4)   // Muted lavender-grey — subtitles
-val TextTertiary         = Color(0xFF5E5578)   // Very muted — footnotes
+// ── Accent — Warm Gold / Amber ──────────────────────────────────
+val GoldAccent         = Color(0xFFB8860B)   // Dark goldenrod / gold highlights
+val SandstoneGold      = Color(0xFFC59B3F)   // Soft gold accent
+val GoldMuted          = Color(0xFF8A6E35)   // Low-emphasis gold
 
-// --- Status / Semantic ---
-val StatusGreen          = Color(0xFF00C97A)   // Vibrant mint green — available, low crowd
-val SuccessGreen         = StatusGreen
-val StatusRed            = Color(0xFFFF3B5C)   // Vivid rose-red — emergency, full
-val DangerRed            = StatusRed
-val TempleRed            = StatusRed
-val StatusOrange         = Color(0xFFF5A623)   // Same as Saffron — moderate/warnings
-val WarningYellow        = Color(0xFFFFC107)   // Yellow — caution
-val DivineWhite          = Color(0xFFFFF8E7)   // Warm white — divine highlights
+// ── Text (Highly legible on light backgrounds) ──────────────────
+val TextPrimary        = Color(0xFF2D2A32)   // Deep charcoal text
+val TextSecondary      = Color(0xFF6B6675)   // Muted slate gray text
+val TextTertiary       = Color(0xFF9E9AAB)   // Low-emphasis text
 
-// --- Legacy object (kept for compatibility) ---
+// ── Status ───────────────────────────────────────────────────────
+val StatusGreen        = Color(0xFF16A34A)   // Rich emerald green (open / low crowd)
+val SuccessGreen       = StatusGreen
+val StatusRed          = Color(0xFFDC2626)   // Vivid red (emergency / heavy crowd)
+val DangerRed          = StatusRed
+val TempleRed          = StatusRed
+val StatusOrange       = Color(0xFFD97706)   // Warm amber orange (moderate)
+val WarningYellow      = StatusOrange
+val DivineWhite        = Color(0xFFFFF8E7)   // Divine highlight white
+
+// ── Legacy alias (compatibility) ────────────────────────────────
 object Dwarkadhish {
-    val Primary  = SaffronPrimary
-    val Light    = SaffronLight
-    val Dark     = SaffronDark
-    val Gold     = SandstoneGold
-    val DarkBg   = SpiritualDarkBg
-    val TextSec  = TextSecondary
+    val Primary = SaffronPrimary
+    val Light   = SaffronLight
+    val Dark    = SaffronDark
+    val Gold    = SandstoneGold
+    val DarkBg  = SpiritualDarkBg
+    val TextSec = TextSecondary
 }

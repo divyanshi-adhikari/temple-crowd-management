@@ -45,7 +45,7 @@ fun TempleTimingsCard(
                     text = "Temple Timings",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White
+                    color = TextPrimary
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Text(

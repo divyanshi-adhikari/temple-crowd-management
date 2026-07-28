@@ -1,17 +1,18 @@
 package com.temple.crowdmanagement.features.dashboard.presentation.components
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable  
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -28,270 +29,175 @@ fun CrowdStatusCard(
     bestTime: String,
     confidence: Int
 ) {
-    //  Safe status handling
-    val safeStatus = status.lowercase()
-    val statusColor = when (safeStatus) {
-        "low" -> Color.Green
-        "moderate" -> SaffronLight
-        "high" -> Color.Red
-        else -> Color.Green
+    val pct = crowdPercentage.coerceIn(0, 100)
+    val statusColor = when (status.lowercase()) {
+        "low"      -> StatusGreen
+        "moderate" -> StatusOrange
+        "high"     -> StatusRed
+        else       -> StatusGreen
     }
-    
-    //  Status emoji matches actual status
-    val statusEmoji = when (safeStatus) {
-        "low" -> "🟢"
-        "moderate" -> "🟡"
-        "high" -> "🔴"
-        else -> "🟢"
+    val flowLabel = when (status.lowercase()) {
+        "low"      -> "Smooth Flow"
+        "moderate" -> "Moderate Flow"
+        "high"     -> "Heavy Flow"
+        else       -> "Smooth Flow"
     }
-    
-    //  Hero card icon matches status
-    val heroEmoji = when (safeStatus) {
-        "low" -> "🟢"
-        "moderate" -> "🟡"
-        "high" -> "🔴"
-        else -> "🟢"
-    }
-    
-    //  Safe percentage (0-100)
-    val safePercentage = crowdPercentage.coerceIn(0, 100)
-    val safeConfidence = confidence.coerceIn(0, 100)
 
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .shadow(
-                elevation = 12.dp,
-                shape = RoundedCornerShape(24.dp),
-                clip = false
-            ),
-        shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = CardDarkBg
-        )
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(containerColor = CardDarkBg),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(28.dp)
-        ) {
-            // Header with dynamic icon
+        Column(modifier = Modifier.padding(20.dp)) {
+
+            // ── Ring Gauge + Status Label ─────────────────────────
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                   
-                    Text(
-                        text = heroEmoji,
-                        fontSize = 22.sp
-                    )
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Text(
-                        text = "LIVE CROWD",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
-                        letterSpacing = 1.sp
-                    )
-                }
-                Surface(
-                    shape = RoundedCornerShape(16.dp),
-                    color = statusColor.copy(alpha = 0.15f)
+                // Circular Ring Meter
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.size(120.dp)
                 ) {
-                    Row(
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = statusEmoji,
-                            fontSize = 14.sp
+                    Canvas(modifier = Modifier.fillMaxSize()) {
+                        val strokeWidth = 14.dp.toPx()
+                        val sweepTotal  = 240f
+                        val startAngle  = 150f
+                        val inset       = strokeWidth / 2f
+                        val arcSize     = Size(size.width - strokeWidth, size.height - strokeWidth)
+                        val topLeft     = Offset(inset, inset)
+
+                        // Track
+                        drawArc(
+                            color      = SurfaceVariantDark,
+                            startAngle = startAngle,
+                            sweepAngle = sweepTotal,
+                            useCenter  = false,
+                            topLeft    = topLeft,
+                            size       = arcSize,
+                            style      = Stroke(width = strokeWidth, cap = StrokeCap.Round)
                         )
-                        Spacer(modifier = Modifier.width(6.dp))
+                        // Progress
+                        drawArc(
+                            color      = statusColor,
+                            startAngle = startAngle,
+                            sweepAngle = sweepTotal * (pct / 100f),
+                            useCenter  = false,
+                            topLeft    = topLeft,
+                            size       = arcSize,
+                            style      = Stroke(width = strokeWidth, cap = StrokeCap.Round)
+                        )
+                    }
+                    // Percentage label inside ring
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(
-                            text = status.uppercase(),
-                            fontSize = 16.sp,
+                            text = "$pct%",
+                            fontSize = 24.sp,
                             fontWeight = FontWeight.Bold,
-                            color = statusColor,
-                            letterSpacing = 1.sp
+                            color = TextPrimary
+                        )
+                        Text(
+                            text = "full",
+                            fontSize = 10.sp,
+                            color = TextSecondary
                         )
                     }
                 }
-            }
 
-            Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.width(20.dp))
 
-            // Big Status Display
-            Text(
-                text = status.uppercase(),
-                fontSize = 40.sp,
-                fontWeight = FontWeight.Bold,
-                color = statusColor,
-                letterSpacing = 2.sp
-            )
-
-            Spacer(modifier = Modifier.height(4.dp))
-            
-            Text(
-                text = "Crowd Level",
-                fontSize = 14.sp,
-                color = TextSecondary
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            // Stats Row - Improved with maxLines
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                StatItem(
-                    modifier = Modifier.weight(1f),
-                    label = "Wait Time",
-                    value = waitTime,
-                    icon = Icons.Default.AccessTime,
-                    color = SaffronLight
-                )
-                StatItem(
-                    modifier = Modifier.weight(1f),
-                    label = "Visitors",
-                    value = totalVisitors,
-                    icon = Icons.Default.People,
-                    color = SaffronPrimary
-                )
-                StatItem(
-                    modifier = Modifier.weight(1f),
-                    label = "Best Time",
-                    value = bestTime,
-                    icon = Icons.Default.Star,
-                    color = SandstoneGold
-                )
-            }
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            // Crowd Meter
-            Column {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
+                // Status text block
+                Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = "Crowd Meter",
-                        fontSize = 13.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = TextSecondary
+                        text = "Live Crowd",
+                        fontSize = 12.sp,
+                        color = TextSecondary,
+                        letterSpacing = 0.3.sp
                     )
+                    Spacer(modifier = Modifier.height(2.dp))
                     Text(
-                        text = "$safePercentage%",
-                        fontSize = 13.sp,
+                        text = status.uppercase(),
+                        fontSize = 30.sp,
                         fontWeight = FontWeight.Bold,
                         color = statusColor
                     )
-                }
-                Spacer(modifier = Modifier.height(6.dp))
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(10.dp)
-                        .shadow(2.dp, RoundedCornerShape(6.dp))
-                        .background(
-                            Color.Gray.copy(alpha = 0.15f),
-                            RoundedCornerShape(6.dp)
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Box(
+                            modifier = Modifier
+                                .size(6.dp)
+                                .background(statusColor, shape = RoundedCornerShape(50))
                         )
-                ) {
-                    Box(
-                        modifier = Modifier
-                            
-                            .fillMaxWidth(safePercentage / 100f)
-                            .height(10.dp)
-                            .background(
-                                Brush.horizontalGradient(
-                                    colors = when {
-                                        safePercentage > 70 -> listOf(Color.Red, SaffronLight)
-                                        safePercentage > 40 -> listOf(SaffronLight, SaffronPrimary)
-                                        else -> listOf(Color.Green, SaffronLight)
-                                    }
-                                ),
-                                RoundedCornerShape(6.dp)
-                            )
+                        Spacer(modifier = Modifier.width(5.dp))
+                        Text(
+                            text = flowLabel,
+                            fontSize = 12.sp,
+                            color = statusColor
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(6.dp))
+                    Text(
+                        text = "Updated $lastUpdated",
+                        fontSize = 11.sp,
+                        color = TextTertiary
                     )
                 }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // AI Confidence Badge
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 4.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(text = "🤖", fontSize = 16.sp)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = "AI Accuracy",
-                        fontSize = 13.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = TextSecondary
-                    )
-                }
-                Surface(
-                    shape = RoundedCornerShape(12.dp),
-                    color = SandstoneGold.copy(alpha = 0.15f)
-                ) {
-                    Text(
-                        text = "$safeConfidence%",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = SandstoneGold,
-                        modifier = Modifier.padding(horizontal = 14.dp, vertical = 4.dp)
-                    )
-                }
-            }
-            
-            // AI Confidence Bar
+            // ── Divider ──────────────────────────────────────────
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(4.dp)
-                    .background(Color.Gray.copy(alpha = 0.15f), RoundedCornerShape(2.dp))
-            ) {
-                Box(
-                    modifier = Modifier
-                        
-                        .fillMaxWidth(safeConfidence / 100f)
-                        .height(4.dp)
-                        .background(
-                            Brush.horizontalGradient(
-                                colors = listOf(SandstoneGold, SaffronPrimary)
-                            ),
-                            RoundedCornerShape(2.dp)
-                        )
-                )
-            }
+                    .height(1.dp)
+                    .background(SurfaceVariantDark)
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Footer
+            // ── Stat Tiles Row ───────────────────────────────────
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
+                horizontalArrangement = Arrangement.SpaceAround
             ) {
-                Text(
-                    text = "⏱ Updated $lastUpdated",
-                    fontSize = 11.sp,
-                    color = TextSecondary.copy(alpha = 0.7f)
-                )
+                StatTile(label = "Est. Wait",    value = waitTime,        unit = "mins")
+                StatTile(label = "Best Time",    value = bestTime,        unit = "")
+                StatTile(label = "Today",        value = totalVisitors,   unit = "visitors")
             }
         }
     }
 }
 
+@Composable
+private fun StatTile(label: String, value: String, unit: String) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(
+            text = label,
+            fontSize = 10.sp,
+            color = TextSecondary,
+            letterSpacing = 0.3.sp
+        )
+        Spacer(modifier = Modifier.height(3.dp))
+        Text(
+            text = value,
+            fontSize = 15.sp,
+            fontWeight = FontWeight.Bold,
+            color = TextPrimary
+        )
+        if (unit.isNotBlank()) {
+            Text(
+                text = unit,
+                fontSize = 9.sp,
+                color = TextTertiary
+            )
+        }
+    }
+}
+
+// Keep StatItem for CrowdStatusCard compatibility with other references
 @Composable
 fun StatItem(
     modifier: Modifier = Modifier,
@@ -300,31 +206,10 @@ fun StatItem(
     icon: ImageVector,
     color: Color
 ) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                icon,
-                contentDescription = null,
-                tint = color,
-                modifier = Modifier.size(16.dp)
-            )
-            Spacer(modifier = Modifier.width(4.dp))
-            Text(
-                text = value,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White,
-                maxLines = 1  
-            )
-        }
-        Text(
-            text = label,
-            fontSize = 10.sp,
-            color = TextSecondary,
-            maxLines = 1  
-        )
+    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+        Icon(icon, contentDescription = null, tint = color, modifier = Modifier.size(16.dp))
+        Spacer(modifier = Modifier.width(4.dp))
+        Text(text = value, fontSize = 14.sp, fontWeight = FontWeight.Bold, color = TextPrimary)
+        Text(text = label, fontSize = 10.sp, color = TextSecondary)
     }
 }

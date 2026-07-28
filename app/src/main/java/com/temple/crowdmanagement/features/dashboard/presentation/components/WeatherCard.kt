@@ -32,7 +32,7 @@ fun WeatherCard(
             ),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = SpiritualDarkBg
+            containerColor = CardDarkBg
         )
     ) {
         Column(
@@ -47,7 +47,7 @@ fun WeatherCard(
                 text = "$temperature°C",
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = TextPrimary
             )
             
             Text(
@@ -82,7 +82,7 @@ fun WeatherInfo(label: String, value: String) {
             text = value,
             fontSize = 14.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.White
+            color = TextPrimary
         )
     }
 }

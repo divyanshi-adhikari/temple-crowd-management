@@ -33,34 +33,38 @@ fun SmartQueueScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(SpiritualDarkBg)
-            .padding(16.dp)
     ) {
-        // Workspace Header
-        Column {
-            Text(
-                text = "⚑  SOMNATH TEMPLE · ZERO-WAIT QUEUE",
-                color = SaffronPrimary,
-                fontSize = 11.sp,
-                fontWeight = FontWeight.Bold,
-                letterSpacing = 0.8.sp
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "Smart Virtual Queue",
-                style = MaterialTheme.typography.headlineLarge,
-                color = TextPrimary
-            )
-            Text(
-                text = "Your place is held — no need to stand in line",
-                color = TextSecondary,
-                fontSize = 13.sp
-            )
+        // Maroon header matching reference design
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(
+                    androidx.compose.ui.graphics.Brush.verticalGradient(
+                        listOf(SaffronDark, SaffronPrimary)
+                    )
+                )
+                .padding(top = 48.dp, bottom = 14.dp, start = 20.dp, end = 20.dp)
+        ) {
+            Column {
+                Text(
+                    text = "Smart Virtual Queue",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = androidx.compose.ui.graphics.Color.White
+                )
+                Text(
+                    text = "Your place is held — no need to stand in line",
+                    fontSize = 12.sp,
+                    color = androidx.compose.ui.graphics.Color.White.copy(alpha = 0.75f)
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 0.dp),
             modifier = Modifier.fillMaxSize()
         ) {
             item {
