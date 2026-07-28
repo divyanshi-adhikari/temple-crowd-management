@@ -53,8 +53,8 @@ fun DashboardTopBar() {
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = SpiritualDarkBg,
-            titleContentColor = SaffronPrimary
+            containerColor    = SpiritualDarkBg,
+            titleContentColor = GoldAccent
         )
     )
 }

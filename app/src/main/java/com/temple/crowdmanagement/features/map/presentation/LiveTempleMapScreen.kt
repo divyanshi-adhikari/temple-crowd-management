@@ -45,12 +45,20 @@ fun LiveTempleMapScreen() {
         // Header
         Column {
             Text(
+                text = "⚑  SOMNATH TEMPLE · LIVE HEATMAP",
+                color = SaffronPrimary,
+                fontSize = 11.sp,
+                fontWeight = FontWeight.Bold,
+                letterSpacing = 0.8.sp
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
                 text = "Live Temple Heatmap",
                 style = MaterialTheme.typography.headlineLarge,
-                color = GoldAccent
+                color = TextPrimary
             )
             Text(
-                text = "Somnath Temple · Real-time AI Crowd Density",
+                text = "Real-time AI crowd density & POI radar",
                 color = TextSecondary,
                 fontSize = 12.sp
             )

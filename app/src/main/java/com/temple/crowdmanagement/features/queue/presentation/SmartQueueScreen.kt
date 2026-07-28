@@ -38,14 +38,22 @@ fun SmartQueueScreen(
         // Workspace Header
         Column {
             Text(
+                text = "⚑  SOMNATH TEMPLE · ZERO-WAIT QUEUE",
+                color = SaffronPrimary,
+                fontSize = 11.sp,
+                fontWeight = FontWeight.Bold,
+                letterSpacing = 0.8.sp
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
                 text = "Smart Virtual Queue",
                 style = MaterialTheme.typography.headlineLarge,
-                color = GoldAccent
+                color = TextPrimary
             )
             Text(
-                text = "Somnath Temple · Zero-Wait Queue Management",
+                text = "Your place is held — no need to stand in line",
                 color = TextSecondary,
-                fontSize = 12.sp
+                fontSize = 13.sp
             )
         }
 
@@ -94,22 +102,22 @@ fun SmartQueueScreen(
                         colors = CardDefaults.cardColors(containerColor = CardDarkBg),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .border(2.dp, SaffronPrimary, RoundedCornerShape(16.dp))
+                            .border(1.dp, GoldAccent.copy(alpha = 0.6f), RoundedCornerShape(16.dp))
                     ) {
                         Column(
                             modifier = Modifier.padding(20.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Surface(
-                                color = SaffronPrimary.copy(alpha = 0.2f),
-                                shape = RoundedCornerShape(8.dp)
+                                color = ElevatedSurface,
+                                shape = RoundedCornerShape(20.dp)
                             ) {
                                 Text(
-                                    text = "ACTIVE VIRTUAL TOKEN",
+                                    text = "● ACTIVE VIRTUAL TOKEN",
                                     color = SandstoneGold,
                                     fontSize = 11.sp,
                                     fontWeight = FontWeight.Bold,
-                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
+                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 5.dp)
                                 )
                             }
                             Spacer(modifier = Modifier.height(12.dp))
@@ -152,7 +160,7 @@ fun SmartQueueScreen(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .background(SurfaceVariantDark, RoundedCornerShape(12.dp))
-                                    .padding(12.dp),
+                                    .padding(14.dp),
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
@@ -171,7 +179,12 @@ fun SmartQueueScreen(
                                 Switch(
                                     checked = active.isNotifyEnabled,
                                     onCheckedChange = { engine.toggleNotification(it) },
-                                    colors = SwitchDefaults.colors(checkedThumbColor = SaffronPrimary)
+                                    colors = SwitchDefaults.colors(
+                                        checkedThumbColor      = Color.Black,
+                                        checkedTrackColor      = SaffronPrimary,
+                                        uncheckedThumbColor    = TextSecondary,
+                                        uncheckedTrackColor    = SurfaceVariantDark
+                                    )
                                 )
                             }
 

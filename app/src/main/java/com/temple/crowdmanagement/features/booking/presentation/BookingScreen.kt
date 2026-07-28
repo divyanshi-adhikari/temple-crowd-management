@@ -50,12 +50,20 @@ fun BookingScreen(
         // Screen Header
         Column {
             Text(
+                text = "⚑  SOMNATH TEMPLE · DARSHAN BOOKING",
+                color = SaffronPrimary,
+                fontSize = 11.sp,
+                fontWeight = FontWeight.Bold,
+                letterSpacing = 0.8.sp
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
                 text = "Smart Darshan Booking",
                 style = MaterialTheme.typography.headlineLarge,
-                color = GoldAccent
+                color = TextPrimary
             )
             Text(
-                text = "Somnath Temple · Veraval, Gujarat",
+                text = "Reserve your sacred Darshan slot",
                 color = TextSecondary,
                 fontSize = 12.sp
             )

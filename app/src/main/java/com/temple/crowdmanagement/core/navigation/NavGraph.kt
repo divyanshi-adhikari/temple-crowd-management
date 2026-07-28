@@ -78,9 +78,9 @@ fun MainAppContainer() {
         bottomBar = {
             if (isAuthenticated) {
                 NavigationBar(
-                    containerColor = SpiritualDarkBg,
-                    contentColor = SandstoneGold,
-                    tonalElevation = 8.dp
+                    containerColor = CardDarkBg,
+                    contentColor   = SandstoneGold,
+                    tonalElevation = 0.dp
                 ) {
                     val currentRoute =
                         navController.currentBackStackEntryAsState().value?.destination?.route
@@ -100,9 +100,7 @@ fun MainAppContainer() {
                             icon = {
                                 Icon(
                                     item.icon,
-                                    contentDescription = item.title,
-                                    tint = if (currentRoute == item.route) SaffronPrimary
-                                           else TextSecondary
+                                    contentDescription = item.title
                                 )
                             },
                             label = {
@@ -110,13 +108,15 @@ fun MainAppContainer() {
                                     item.title,
                                     fontSize = 10.sp,
                                     fontWeight = if (currentRoute == item.route) FontWeight.Bold
-                                                 else FontWeight.Normal,
-                                    color = if (currentRoute == item.route) SaffronPrimary
-                                            else TextSecondary
+                                                 else FontWeight.Normal
                                 )
                             },
                             colors = NavigationBarItemDefaults.colors(
-                                indicatorColor = SaffronPrimary.copy(alpha = 0.15f)
+                                indicatorColor         = SaffronPrimary,
+                                selectedIconColor      = Color.Black,
+                                unselectedIconColor    = TextSecondary,
+                                selectedTextColor      = SaffronPrimary,
+                                unselectedTextColor    = TextSecondary
                             )
                         )
                     }

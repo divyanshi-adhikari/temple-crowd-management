@@ -31,7 +31,7 @@ fun ActionsGrid(
             ),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFF1A0E0A)  // Dark Background
+            containerColor = CardDarkBg
         )
     ) {
         Column(

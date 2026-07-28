@@ -40,12 +40,20 @@ fun EmergencySOSScreen(
         // Header
         Column {
             Text(
+                text = "⚑  SOMNATH TEMPLE · SAFETY SYSTEM",
+                color = SaffronPrimary,
+                fontSize = 11.sp,
+                fontWeight = FontWeight.Bold,
+                letterSpacing = 0.8.sp
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
                 text = "Emergency & SOS",
                 style = MaterialTheme.typography.headlineLarge,
                 color = StatusRed
             )
             Text(
-                text = "Somnath Temple · Instant First Responder Alerting",
+                text = "Instant first responder alerting",
                 color = TextSecondary,
                 fontSize = 12.sp
             )

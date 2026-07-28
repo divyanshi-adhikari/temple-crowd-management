@@ -32,7 +32,7 @@ fun CrowdPredictionCard(
             ),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = SpiritualDarkBg
+            containerColor = CardDarkBg
         )
     ) {
         Column(
@@ -87,7 +87,7 @@ fun CrowdPredictionCard(
                         text = bestTime,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.Green
+                        color = StatusGreen
                     )
                 }
             }

@@ -22,7 +22,7 @@ fun HeaderSection(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = SaffronPrimary.copy(alpha = 0.1f)  
+            containerColor = ElevatedSurface
         )
     ) {
         Column(

@@ -30,7 +30,7 @@ fun TempleTimingsCard(
             ),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = SpiritualDarkBg
+            containerColor = CardDarkBg
         )
     ) {
         Column(
@@ -62,9 +62,9 @@ fun TempleTimingsCard(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                TimingItem(label = "Opens", value = openingTime, color = Color.Green)
-                TimingItem(label = "Closes", value = closingTime, color = Color.Red)
-                TimingItem(label = "Next Aarti", value = nextAarti, color = SaffronPrimary)
+                TimingItem(label = "Opens",     value = openingTime, color = StatusGreen)
+                TimingItem(label = "Closes",     value = closingTime, color = StatusRed)
+                TimingItem(label = "Next Aarti", value = nextAarti,   color = SaffronPrimary)
             }
         }
     }
