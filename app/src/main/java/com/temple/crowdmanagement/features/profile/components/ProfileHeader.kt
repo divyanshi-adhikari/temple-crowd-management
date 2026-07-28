@@ -22,15 +22,14 @@ fun ProfileHeader(
     userName: String,
     userRole: String,
     userEmail: String,
-    
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .shadow(8.dp, RoundedCornerShape(20.dp), clip = false),
+            .shadow(4.dp, RoundedCornerShape(20.dp), clip = false),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = SpiritualDarkBg
+            containerColor = CardDarkBg
         )
     ) {
         Row(
@@ -43,7 +42,7 @@ fun ProfileHeader(
             Surface(
                 modifier = Modifier
                     .size(70.dp)
-                    .shadow(4.dp, CircleShape),
+                    .shadow(2.dp, CircleShape),
                 shape = CircleShape,
                 color = SaffronPrimary.copy(alpha = 0.15f)
             ) {
@@ -62,18 +61,19 @@ fun ProfileHeader(
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            // User Info - Only Email (No Phone)
+            // User Info
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = "👤 $userName",
+                    text = userName,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White
+                    color = TextPrimary
                 )
                 Text(
                     text = userRole,
                     fontSize = 14.sp,
-                    color = SaffronLight
+                    color = SaffronPrimary,
+                    fontWeight = FontWeight.SemiBold
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Row(

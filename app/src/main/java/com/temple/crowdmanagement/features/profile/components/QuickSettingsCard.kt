@@ -24,10 +24,10 @@ fun QuickSettingsCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .shadow(8.dp, RoundedCornerShape(20.dp), clip = false),
+            .shadow(4.dp, RoundedCornerShape(20.dp), clip = false),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = SpiritualDarkBg
+            containerColor = CardDarkBg
         )
     ) {
         Column(
@@ -62,7 +62,7 @@ fun QuickSettingsCard(
                     text = "Quick Settings",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White
+                    color = TextPrimary
                 )
             }
 
@@ -110,7 +110,7 @@ fun SettingsChip(
     Surface(
         modifier = modifier.clickable { onClick() },
         shape = RoundedCornerShape(12.dp),
-        color = Color.White.copy(alpha = 0.05f)
+        color = SurfaceVariantDark
     ) {
         Column(
             modifier = Modifier

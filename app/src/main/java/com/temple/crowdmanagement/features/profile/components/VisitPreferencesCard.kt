@@ -23,10 +23,10 @@ fun VisitPreferencesCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .shadow(8.dp, RoundedCornerShape(20.dp), clip = false),
+            .shadow(4.dp, RoundedCornerShape(20.dp), clip = false),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = SpiritualDarkBg
+            containerColor = CardDarkBg
         )
     ) {
         Column(
@@ -61,7 +61,7 @@ fun VisitPreferencesCard(
                     text = "Visit Preferences",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White
+                    color = TextPrimary
                 )
             }
 
@@ -122,8 +122,8 @@ fun PreferenceItem(
         Text(
             text = value,
             fontSize = 14.sp,
-            fontWeight = FontWeight.Medium,
-            color = Color.White
+            fontWeight = FontWeight.Bold,
+            color = TextPrimary
         )
     }
 }

@@ -23,10 +23,10 @@ fun QuickInfoCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .shadow(8.dp, RoundedCornerShape(20.dp), clip = false),
+            .shadow(4.dp, RoundedCornerShape(20.dp), clip = false),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = SpiritualDarkBg
+            containerColor = CardDarkBg
         )
     ) {
         Column(
@@ -62,7 +62,7 @@ fun QuickInfoCard(
                         text = "Quick Facts",
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        color = TextPrimary
                     )
                     Text(
                         text = "Essential temple information",
@@ -108,12 +108,12 @@ fun FactCard(
     fact: QuickFact
 ) {
     Card(
-        modifier = modifier
-            .shadow(4.dp, RoundedCornerShape(14.dp), clip = false),
+        modifier = modifier,
         shape = RoundedCornerShape(14.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White.copy(alpha = 0.06f)
-        )
+            containerColor = SurfaceVariantDark
+        ),
+        elevation = CardDefaults.cardElevation(0.dp)
     ) {
         Row(
             modifier = Modifier
@@ -147,15 +147,15 @@ fun FactCard(
                 // Value (bold text) - e.g., "Lord Krishna"
                 Text(
                     text = fact.value,
-                    fontSize = 15.sp,
+                    fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White,
+                    color = TextPrimary,
                     maxLines = 1
                 )
                 // Label (small text) - e.g., "Deity"
                 Text(
                     text = fact.label,
-                    fontSize = 12.sp,
+                    fontSize = 11.sp,
                     color = TextSecondary,
                     maxLines = 1
                 )

@@ -24,10 +24,10 @@ fun FAQSection(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .shadow(8.dp, RoundedCornerShape(20.dp), clip = false),
+            .shadow(4.dp, RoundedCornerShape(20.dp), clip = false),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = SpiritualDarkBg
+            containerColor = CardDarkBg
         )
     ) {
         Column(
@@ -61,9 +61,9 @@ fun FAQSection(
                 Column {
                     Text(
                         text = "Frequently Asked Questions",
-                        fontSize = 20.sp,
+                        fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        color = TextPrimary
                     )
                     Text(
                         text = "${faqs.size} common questions answered",
@@ -72,7 +72,6 @@ fun FAQSection(
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                //  Better badge design
                 Surface(
                     shape = RoundedCornerShape(12.dp),
                     color = SaffronPrimary.copy(alpha = 0.15f)
@@ -84,7 +83,7 @@ fun FAQSection(
                         Icon(
                             Icons.Default.QuestionAnswer,
                             contentDescription = null,
-                            tint = SaffronLight,
+                            tint = SaffronPrimary,
                             modifier = Modifier.size(14.dp)
                         )
                         Spacer(modifier = Modifier.width(6.dp))
@@ -92,7 +91,7 @@ fun FAQSection(
                             text = "${faqs.size}",
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold,
-                            color = SaffronLight
+                            color = SaffronPrimary
                         )
                     }
                 }
@@ -109,7 +108,7 @@ fun FAQSection(
                 
                 if (index != faqs.size - 1) {
                     Divider(
-                        color = Color.Gray.copy(alpha = 0.1f),
+                        color = SurfaceVariantDark,
                         modifier = Modifier.padding(vertical = 4.dp)
                     )
                 }
@@ -140,8 +139,8 @@ fun FAQItem(
             Text(
                 text = question,
                 fontSize = 15.sp,
-                fontWeight = FontWeight.Medium,
-                color = Color.White,
+                fontWeight = FontWeight.SemiBold,
+                color = TextPrimary,
                 modifier = Modifier.weight(1f)
             )
             Icon(
@@ -157,7 +156,7 @@ fun FAQItem(
             Spacer(modifier = Modifier.height(8.dp))
             Surface(
                 shape = RoundedCornerShape(12.dp),
-                color = Color.White.copy(alpha = 0.05f),
+                color = SurfaceVariantDark,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(

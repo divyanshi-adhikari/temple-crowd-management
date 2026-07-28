@@ -24,10 +24,10 @@ fun ContactCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .shadow(8.dp, RoundedCornerShape(20.dp), clip = false),
+            .shadow(4.dp, RoundedCornerShape(20.dp), clip = false),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = SpiritualDarkBg
+            containerColor = CardDarkBg
         )
     ) {
         Column(
@@ -50,7 +50,7 @@ fun ContactCard(
                     text = "Contact Us",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White
+                    color = TextPrimary
                 )
             }
 
@@ -66,7 +66,7 @@ fun ContactCard(
                 
                 if (index != contacts.size - 1) {
                     Divider(
-                        color = Color.Gray.copy(alpha = 0.1f),
+                        color = SurfaceVariantDark,
                         modifier = Modifier.padding(vertical = 6.dp)
                     )
                 }
@@ -117,8 +117,8 @@ fun ContactItem(
             Text(
                 text = value,
                 fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
-                color = Color.White
+                fontWeight = FontWeight.SemiBold,
+                color = TextPrimary
             )
         }
 

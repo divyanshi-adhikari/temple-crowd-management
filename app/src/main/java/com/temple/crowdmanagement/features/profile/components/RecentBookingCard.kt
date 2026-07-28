@@ -25,10 +25,10 @@ fun RecentBookingCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .shadow(8.dp, RoundedCornerShape(20.dp), clip = false),
+            .shadow(4.dp, RoundedCornerShape(20.dp), clip = false),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = SpiritualDarkBg
+            containerColor = CardDarkBg
         )
     ) {
         Column(
@@ -63,14 +63,14 @@ fun RecentBookingCard(
                     text = "Recent Bookings",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White
+                    color = TextPrimary
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
                     text = "View All",
                     fontSize = 12.sp,
                     color = SaffronPrimary,
-                    fontWeight = FontWeight.Medium,
+                    fontWeight = FontWeight.Bold,
                     modifier = Modifier.clickable { /* Navigate to all bookings */ }
                 )
             }
@@ -82,7 +82,7 @@ fun RecentBookingCard(
                 BookingItem(booking = booking)
                 if (index != bookings.take(3).size - 1) {
                     Divider(
-                        color = Color.Gray.copy(alpha = 0.1f),
+                        color = SurfaceVariantDark,
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
                 }
@@ -123,8 +123,8 @@ fun BookingItem(
             Text(
                 text = booking.type,
                 fontSize = 15.sp,
-                fontWeight = FontWeight.Medium,
-                color = Color.White
+                fontWeight = FontWeight.SemiBold,
+                color = TextPrimary
             )
             Text(
                 text = "${booking.date} | ${booking.slot}",
@@ -152,13 +152,18 @@ fun BookingItem(
                         BookingStatus.UPCOMING -> "🕒"
                         BookingStatus.CANCELLED -> "✗"
                     },
-                    fontSize = 12.sp
+                    fontSize = 12.sp,
+                    color = when (booking.status) {
+                        BookingStatus.COMPLETED -> SuccessGreen
+                        BookingStatus.UPCOMING -> SaffronPrimary
+                        BookingStatus.CANCELLED -> DangerRed
+                    }
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
                     text = booking.status.name,
                     fontSize = 11.sp,
-                    fontWeight = FontWeight.Medium,
+                    fontWeight = FontWeight.Bold,
                     color = when (booking.status) {
                         BookingStatus.COMPLETED -> SuccessGreen
                         BookingStatus.UPCOMING -> SaffronPrimary

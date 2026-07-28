@@ -21,10 +21,10 @@ fun HelpSection() {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .shadow(8.dp, RoundedCornerShape(20.dp), clip = false),
+            .shadow(4.dp, RoundedCornerShape(20.dp), clip = false),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = SpiritualDarkBg
+            containerColor = CardDarkBg
         )
     ) {
         Column(
@@ -59,7 +59,7 @@ fun HelpSection() {
                     text = "Need Help?",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White
+                    color = TextPrimary
                 )
             }
 
@@ -103,7 +103,7 @@ fun HelpAction(
     Surface(
         modifier = modifier.clickable { onClick() },
         shape = RoundedCornerShape(12.dp),
-        color = Color.White.copy(alpha = 0.05f)
+        color = SurfaceVariantDark
     ) {
         Column(
             modifier = Modifier
@@ -120,7 +120,7 @@ fun HelpAction(
                 text = label,
                 fontSize = 12.sp,
                 color = TextSecondary,
-                fontWeight = FontWeight.Medium
+                fontWeight = FontWeight.Bold
             )
         }
     }

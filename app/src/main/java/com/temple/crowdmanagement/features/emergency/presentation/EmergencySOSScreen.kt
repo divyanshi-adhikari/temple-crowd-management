@@ -46,7 +46,7 @@ fun EmergencySOSScreen(
                         listOf(SaffronDark, SaffronPrimary)
                     )
                 )
-                .padding(top = 48.dp, bottom = 14.dp, start = 20.dp, end = 20.dp)
+                .padding(top = 30.dp, bottom = 10.dp, start = 20.dp, end = 20.dp)
         ) {
             Column {
                 Text(

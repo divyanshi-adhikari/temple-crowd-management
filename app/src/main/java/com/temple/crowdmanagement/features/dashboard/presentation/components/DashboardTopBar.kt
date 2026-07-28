@@ -31,7 +31,7 @@ fun DashboardTopBar(
                     colors = listOf(SaffronDark, SaffronPrimary)
                 )
             )
-            .padding(top = 48.dp, bottom = 12.dp, start = 20.dp, end = 20.dp)
+            .padding(top = 30.dp, bottom = 10.dp, start = 20.dp, end = 20.dp)
     ) {
         Column {
             // Temple identity row

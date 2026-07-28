@@ -23,10 +23,10 @@ fun AartiTimingsCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .shadow(8.dp, RoundedCornerShape(20.dp), clip = false),
+            .shadow(4.dp, RoundedCornerShape(20.dp), clip = false),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = SpiritualDarkBg
+            containerColor = CardDarkBg
         )
     ) {
         Column(
@@ -49,7 +49,7 @@ fun AartiTimingsCard(
                     text = "Aarti Timings",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White
+                    color = TextPrimary
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Surface(
@@ -59,7 +59,8 @@ fun AartiTimingsCard(
                     Text(
                         text = "${aartiTimings.size} Daily",
                         fontSize = 12.sp,
-                        color = SaffronLight,
+                        color = SaffronPrimary,
+                        fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
                     )
                 }
@@ -78,7 +79,7 @@ fun AartiTimingsCard(
                 
                 if (index != aartiTimings.size - 1) {
                     Divider(
-                        color = Color.Gray.copy(alpha = 0.1f),
+                        color = SurfaceVariantDark,
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
                 }
@@ -88,7 +89,7 @@ fun AartiTimingsCard(
             Spacer(modifier = Modifier.height(8.dp))
             Surface(
                 shape = RoundedCornerShape(12.dp),
-                color = SandstoneGold.copy(alpha = 0.1f),
+                color = SandstoneGold.copy(alpha = 0.15f),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Row(
@@ -105,7 +106,8 @@ fun AartiTimingsCard(
                     Text(
                         text = "Special Aarti on festivals and special occasions",
                         fontSize = 13.sp,
-                        color = SandstoneGold
+                        color = GoldAccent,
+                        fontWeight = FontWeight.Bold
                     )
                 }
             }
@@ -145,8 +147,8 @@ fun AartiItem(
             Text(
                 text = name,
                 fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
-                color = Color.White
+                fontWeight = FontWeight.SemiBold,
+                color = TextPrimary
             )
             if (description.isNotEmpty()) {
                 Text(
@@ -161,12 +163,13 @@ fun AartiItem(
         if (isSpecial) {
             Surface(
                 shape = RoundedCornerShape(8.dp),
-                color = SandstoneGold.copy(alpha = 0.2f)
+                color = GoldAccent.copy(alpha = 0.15f)
             ) {
                 Text(
                     text = "🌟 Special",
                     fontSize = 10.sp,
-                    color = SandstoneGold,
+                    color = GoldAccent,
+                    fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                 )
             }

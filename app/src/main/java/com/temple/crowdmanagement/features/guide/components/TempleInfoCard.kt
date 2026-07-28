@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.clickable
 import com.temple.crowdmanagement.ui.theme.*
 
-
 @Composable
 fun TempleInfoCard(
     templeName: String,
@@ -31,10 +30,10 @@ fun TempleInfoCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .shadow(8.dp, RoundedCornerShape(20.dp), clip = false),
+            .shadow(4.dp, RoundedCornerShape(20.dp), clip = false),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = SpiritualDarkBg
+            containerColor = CardDarkBg
         )
     ) {
         Column(
@@ -74,7 +73,7 @@ fun TempleInfoCard(
             Text(
                 text = description,
                 fontSize = 14.sp,
-                color = Color.White,
+                color = TextPrimary,
                 lineHeight = 22.sp
             )
 
@@ -86,7 +85,7 @@ fun TempleInfoCard(
                     text = "Read More...",
                     fontSize = 14.sp,
                     color = SaffronPrimary,
-                    fontWeight = FontWeight.Medium,
+                    fontWeight = FontWeight.Bold,
                     modifier = Modifier.clickable { expanded = true }
                 )
             }
@@ -99,13 +98,13 @@ fun TempleInfoCard(
                     text = "📜 History",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
-                    color = SaffronLight
+                    color = SaffronPrimary
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = history,
                     fontSize = 14.sp,
-                    color = Color.White,
+                    color = TextPrimary,
                     lineHeight = 22.sp
                 )
 
@@ -116,13 +115,13 @@ fun TempleInfoCard(
                     text = "🏛️ Architecture",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
-                    color = SaffronLight
+                    color = SaffronPrimary
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = architecture,
                     fontSize = 14.sp,
-                    color = Color.White,
+                    color = TextPrimary,
                     lineHeight = 22.sp
                 )
 
@@ -132,7 +131,7 @@ fun TempleInfoCard(
                     text = "Show Less",
                     fontSize = 14.sp,
                     color = SaffronPrimary,
-                    fontWeight = FontWeight.Medium,
+                    fontWeight = FontWeight.Bold,
                     modifier = Modifier.clickable { expanded = false }
                 )
             }
@@ -142,7 +141,7 @@ fun TempleInfoCard(
             // Timings
             Surface(
                 shape = RoundedCornerShape(12.dp),
-                color = SaffronPrimary.copy(alpha = 0.1f),
+                color = SurfaceVariantDark,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Row(
@@ -156,15 +155,15 @@ fun TempleInfoCard(
                         Icon(
                             Icons.Default.AccessTime,
                             contentDescription = "Timings",
-                            tint = SaffronLight,
+                            tint = SaffronPrimary,
                             modifier = Modifier.size(20.dp)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = "Temple Timings",
                             fontSize = 14.sp,
-                            color = Color.White,
-                            fontWeight = FontWeight.Medium
+                            color = TextPrimary,
+                            fontWeight = FontWeight.SemiBold
                         )
                     }
                     Text(
