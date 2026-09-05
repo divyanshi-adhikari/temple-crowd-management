@@ -12,6 +12,5 @@ build/
 /build
 app/build/
 /captures
-.externalNativeBuild
-.cxx
+/.idea/inspectionProfiles/
 local.properties
