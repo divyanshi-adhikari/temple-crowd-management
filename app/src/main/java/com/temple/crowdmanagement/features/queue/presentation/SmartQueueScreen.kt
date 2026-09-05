@@ -28,6 +28,7 @@ fun SmartQueueScreen(
     engine: QueueEngine = remember { QueueEngine() }
 ) {
     val queueState by engine.activeQueue.collectAsState()
+    val liveGates by engine.liveGates.collectAsState()
 
     Column(
         modifier = Modifier
@@ -213,6 +214,69 @@ fun SmartQueueScreen(
                                     modifier = Modifier.weight(1f)
                                 ) {
                                     Text("LEAVE QUEUE", fontSize = 11.sp)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (liveGates.isNotEmpty()) {
+                item {
+                    Card(
+                        colors = CardDefaults.cardColors(containerColor = CardDarkBg),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Column(modifier = Modifier.padding(16.dp)) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = "Live Entry Gates (Ops Sync)",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    fontWeight = FontWeight.Bold,
+                                    color = GoldAccent
+                                )
+                                Text(
+                                    text = "Real-time",
+                                    fontSize = 11.sp,
+                                    color = StatusGreen
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(10.dp))
+                            liveGates.take(4).forEach { gate ->
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 6.dp)
+                                        .background(SurfaceVariantDark, RoundedCornerShape(8.dp))
+                                        .padding(10.dp),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Column(modifier = Modifier.weight(1f)) {
+                                        Text(gate.name, fontWeight = FontWeight.SemiBold, fontSize = 13.sp, color = TextPrimary)
+                                        Text("${gate.currentPilgrims} pilgrims · ${gate.category}", fontSize = 11.sp, color = TextSecondary)
+                                    }
+                                    Column(horizontalAlignment = Alignment.End) {
+                                        Text(
+                                            text = gate.status,
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 11.sp,
+                                            color = when (gate.status) {
+                                                "OPEN" -> StatusGreen
+                                                "HOLD" -> StatusOrange
+                                                else -> StatusRed
+                                            }
+                                        )
+                                        Text(
+                                            text = "${gate.waitingTimeMin}m wait",
+                                            fontSize = 11.sp,
+                                            color = TextSecondary
+                                        )
+                                    }
                                 }
                             }
                         }

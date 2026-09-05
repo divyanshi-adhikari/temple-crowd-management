@@ -25,6 +25,8 @@ fun DashboardScreen(
 
     LaunchedEffect(Unit) { viewModel.loadDashboardData() }
 
+    val selectedTemple by viewModel.selectedTemple.collectAsState()
+
     // The top bar is a custom Box (not TopAppBar) so we don't use Scaffold's topBar slot
     Column(
         modifier = Modifier
@@ -33,6 +35,8 @@ fun DashboardScreen(
     ) {
         // Maroon header (handles its own top padding / status bar area)
         DashboardTopBar(
+            selectedTemple = selectedTemple,
+            onSelectTemple = { viewModel.selectTemple(it) },
             isTempleOpen   = uiState.isTempleOpen,
             crowdFlowLabel = when (uiState.crowdStatus.lowercase()) {
                 "low"      -> "Smooth Flow"

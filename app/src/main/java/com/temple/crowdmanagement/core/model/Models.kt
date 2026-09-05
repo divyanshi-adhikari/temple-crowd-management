@@ -3,8 +3,11 @@ package com.temple.crowdmanagement.core.model
 import androidx.compose.ui.graphics.Color
 import java.util.UUID
 
-enum class TempleSite(val displayName: String, val location: String, val imageTag: String) {
-    SOMNATH("Somnath Temple", "Veraval, Gujarat", "somnath")
+enum class TempleSite(val displayName: String, val location: String, val imageTag: String, val backendId: String) {
+    SOMNATH("Somnath Temple", "Veraval, Gujarat", "somnath", "somnath"),
+    DWARKA("Dwarkadhish Temple", "Dwarka, Gujarat", "dwarka", "dwarka"),
+    AMBAJI("Ambaji Mata Temple", "Ambaji, Gujarat", "ambaji", "ambaji"),
+    PAVAGADH("Kalika Mata Temple", "Pavagadh, Gujarat", "pavagadh", "pavagadh")
 }
 
 data class DarshanSlot(
