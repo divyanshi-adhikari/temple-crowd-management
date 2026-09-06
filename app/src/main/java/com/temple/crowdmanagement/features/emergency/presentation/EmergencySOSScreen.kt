@@ -152,7 +152,12 @@ fun EmergencySOSScreen(
                                 .background(StatusRed, CircleShape)
                                 .border(4.dp, Color.White.copy(alpha = 0.8f), CircleShape)
                                 .clickable {
-                                    activeTriggerAlert = engine.triggerSOS("GENERAL PANIC SOS", !isOfflineMode)
+                                    activeTriggerAlert = engine.triggerSOS(
+                                        alertType = "GENERAL PANIC SOS",
+                                        isNetworkAvailable = !isOfflineMode,
+                                        templeId = "somnath",
+                                        locationLabel = "Somnath Sanctum Campus"
+                                    )
                                 },
                             contentAlignment = Alignment.Center
                         ) {
@@ -205,14 +210,28 @@ fun EmergencySOSScreen(
                         icon = Icons.Default.MedicalServices,
                         color = StatusRed,
                         modifier = Modifier.weight(1f),
-                        onClick = { activeTriggerAlert = engine.triggerSOS("MEDICAL EMERGENCY", !isOfflineMode) }
+                        onClick = {
+                            activeTriggerAlert = engine.triggerSOS(
+                                alertType = "MEDICAL EMERGENCY",
+                                isNetworkAvailable = !isOfflineMode,
+                                templeId = "somnath",
+                                locationLabel = "Somnath Medical Aid Post"
+                            )
+                        }
                     )
                     CategorySosCard(
                         title = "Stampede",
                         icon = Icons.Default.Groups,
                         color = StatusOrange,
                         modifier = Modifier.weight(1f),
-                        onClick = { activeTriggerAlert = engine.triggerSOS("CROWD STAMPEDE RISK", !isOfflineMode) }
+                        onClick = {
+                            activeTriggerAlert = engine.triggerSOS(
+                                alertType = "CROWD STAMPEDE RISK",
+                                isNetworkAvailable = !isOfflineMode,
+                                templeId = "somnath",
+                                locationLabel = "Somnath Garbhagriha Entry Queue"
+                            )
+                        }
                     )
                 }
             }
@@ -227,14 +246,28 @@ fun EmergencySOSScreen(
                         icon = Icons.Default.LocalFireDepartment,
                         color = Color(0xFFD84315),
                         modifier = Modifier.weight(1f),
-                        onClick = { activeTriggerAlert = engine.triggerSOS("FIRE HAZARD", !isOfflineMode) }
+                        onClick = {
+                            activeTriggerAlert = engine.triggerSOS(
+                                alertType = "FIRE HAZARD",
+                                isNetworkAvailable = !isOfflineMode,
+                                templeId = "somnath",
+                                locationLabel = "Somnath Outer Perimeter"
+                            )
+                        }
                     )
                     CategorySosCard(
                         title = "Lost Person",
                         icon = Icons.Default.PersonSearch,
                         color = GoldAccent,
                         modifier = Modifier.weight(1f),
-                        onClick = { activeTriggerAlert = engine.triggerSOS("LOST CHILD / ELDERLY", !isOfflineMode) }
+                        onClick = {
+                            activeTriggerAlert = engine.triggerSOS(
+                                alertType = "LOST CHILD / ELDERLY",
+                                isNetworkAvailable = !isOfflineMode,
+                                templeId = "somnath",
+                                locationLabel = "Somnath Visitors Plaza"
+                            )
+                        }
                     )
                 }
             }

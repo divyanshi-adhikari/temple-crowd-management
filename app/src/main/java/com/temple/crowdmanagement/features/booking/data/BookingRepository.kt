@@ -3,11 +3,17 @@ package com.temple.crowdmanagement.features.booking.data
 import com.temple.crowdmanagement.core.model.BookingPass
 import com.temple.crowdmanagement.core.model.DarshanSlot
 import com.temple.crowdmanagement.core.model.TempleSite
+import com.temple.crowdmanagement.core.network.NetworkClient
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
-class BookingRepository {
+class BookingRepository(
+    private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main)
+) {
 
     private val _userBookings = MutableStateFlow<List<BookingPass>>(
         listOf(
@@ -34,6 +40,10 @@ class BookingRepository {
         )
     }
 
+    /**
+     * Confirm a booking locally AND sync to the bridge server so the web
+     * admin Booking Operations page reflects it in real-time.
+     */
     fun confirmBooking(temple: TempleSite, slotTime: String, devoteeCount: Int, name: String): BookingPass {
         val newPass = BookingPass(
             temple = temple,
@@ -42,6 +52,21 @@ class BookingRepository {
             passHolderName = name.ifBlank { "Pilgrim Devotee" }
         )
         _userBookings.value = listOf(newPass) + _userBookings.value
+
+        // 🔄 Sync to bridge server → web admin sees it instantly
+        scope.launch(Dispatchers.IO) {
+            try {
+                NetworkClient.postBooking(
+                    templeId = temple.backendId,
+                    slotTime = slotTime,
+                    devoteeCount = devoteeCount,
+                    name = newPass.passHolderName
+                )
+            } catch (_: Exception) {
+                // Silent — offline bookings still work
+            }
+        }
+
         return newPass
     }
 }

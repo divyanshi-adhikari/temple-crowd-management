@@ -27,12 +27,16 @@ import com.temple.crowdmanagement.ui.theme.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LiveTempleMapScreen() {
-    val heatZones = remember { TempleZoneData.getZonesForTemple(TempleSite.SOMNATH) }
-    val pois      = remember { TempleZoneData.getPOIsForTemple(TempleSite.SOMNATH) }
+    var selectedTemple by remember { mutableStateOf(TempleSite.SOMNATH) }
+    val heatZones = remember(selectedTemple) { TempleZoneData.getZonesForTemple(selectedTemple) }
+    val pois      = remember(selectedTemple) { TempleZoneData.getPOIsForTemple(selectedTemple) }
 
     var visiblePoiTypes by remember { mutableStateOf(POIType.values().toSet()) }
     var selectedPoi     by remember { mutableStateOf<ZonePOI?>(null) }
     var selectedZone    by remember { mutableStateOf<HeatZone?>(null) }
+
+    var zoomScale by remember { mutableFloatStateOf(1f) }
+    var panOffset by remember { mutableStateOf(androidx.compose.ui.geometry.Offset.Zero) }
 
     Column(
         modifier = Modifier
@@ -44,27 +48,57 @@ fun LiveTempleMapScreen() {
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Brush.verticalGradient(listOf(SaffronDark, SaffronPrimary)))
-                .padding(top = 30.dp, bottom = 10.dp, start = 20.dp, end = 20.dp)
+                .padding(top = 30.dp, bottom = 12.dp, start = 20.dp, end = 20.dp)
         ) {
             Column {
                 Text(
-                    text = "Live Temple Heatmap",
+                    text = "Live Masterplan & Crowd Heatmap",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
                 Text(
-                    text = "Somnath · Real-time AI crowd density",
+                    text = "${selectedTemple.displayName} · Real-time AI heat zones & POIs",
                     fontSize = 12.sp,
-                    color = Color.White.copy(alpha = 0.75f)
+                    color = Color.White.copy(alpha = 0.8f)
                 )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                // Temple Switcher Tabs (Somnath vs Dwarka)
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    listOf(TempleSite.SOMNATH, TempleSite.DWARKA).forEach { site ->
+                        val isCurrent = selectedTemple == site
+                        Surface(
+                            shape = RoundedCornerShape(20.dp),
+                            color = if (isCurrent) GoldAccent else Color.White.copy(alpha = 0.18f),
+                            modifier = Modifier.clickable {
+                                selectedTemple = site
+                                selectedPoi = null
+                                selectedZone = null
+                                zoomScale = 1f
+                                panOffset = androidx.compose.ui.geometry.Offset.Zero
+                            }
+                        ) {
+                            Text(
+                                text = if (site == TempleSite.SOMNATH) "Somnath Masterplan" else "Dwarka Masterplan",
+                                color = if (isCurrent) Color(0xFF1E1405) else Color.White,
+                                fontWeight = if (isCurrent) FontWeight.Bold else FontWeight.Medium,
+                                fontSize = 12.sp,
+                                modifier = Modifier.padding(horizontal = 14.dp, vertical = 6.dp)
+                            )
+                        }
+                    }
+                }
             }
         }
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(14.dp)
         ) {
             // POI Filter Chips
             LazyRow(
@@ -88,14 +122,14 @@ fun LiveTempleMapScreen() {
                 }
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
             // Density Legend
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(CardDarkBg, RoundedCornerShape(10.dp))
-                    .padding(horizontal = 12.dp, vertical = 8.dp),
+                    .padding(horizontal = 12.dp, vertical = 6.dp),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 DensityIndicator("Low",      StatusGreen)
@@ -106,7 +140,7 @@ fun LiveTempleMapScreen() {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Map Canvas
+            // Map Canvas Box with Floating Zoom Controls
             Card(
                 colors = CardDefaults.cardColors(containerColor = Color(0xFF0F0D11)),
                 modifier = Modifier
@@ -116,12 +150,90 @@ fun LiveTempleMapScreen() {
             ) {
                 Box(modifier = Modifier.fillMaxSize()) {
                     InteractiveTempleCanvas(
+                        temple          = selectedTemple,
                         heatZones       = heatZones,
                         pois            = pois,
                         visiblePoiTypes = visiblePoiTypes,
+                        zoomScale       = zoomScale,
+                        panOffset       = panOffset,
+                        onTransform     = { zChange, pChange ->
+                            val nextScale = (zoomScale * zChange).coerceIn(1f, 4.5f)
+                            zoomScale = nextScale
+                            panOffset = if (nextScale <= 1.05f) {
+                                androidx.compose.ui.geometry.Offset.Zero
+                            } else {
+                                androidx.compose.ui.geometry.Offset(
+                                    panOffset.x + pChange.x,
+                                    panOffset.y + pChange.y
+                                )
+                            }
+                        },
                         onPoiClicked    = { selectedPoi = it },
                         onZoneClicked   = { selectedZone = it }
                     )
+
+                    // Zoom / Pan Overlay Controls
+                    Column(
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .padding(12.dp),
+                        verticalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        // Zoom In (+)
+                        SmallFloatingActionButton(
+                            onClick = {
+                                zoomScale = (zoomScale * 1.25f).coerceAtMost(4.5f)
+                            },
+                            containerColor = CardDarkBg.copy(alpha = 0.9f),
+                            contentColor = GoldAccent,
+                            shape = CircleShape
+                        ) {
+                            Icon(Icons.Default.Add, contentDescription = "Zoom In", modifier = Modifier.size(18.dp))
+                        }
+
+                        // Zoom Out (-)
+                        SmallFloatingActionButton(
+                            onClick = {
+                                val nextScale = (zoomScale / 1.25f).coerceAtLeast(1f)
+                                zoomScale = nextScale
+                                if (nextScale == 1f) panOffset = androidx.compose.ui.geometry.Offset.Zero
+                            },
+                            containerColor = CardDarkBg.copy(alpha = 0.9f),
+                            contentColor = GoldAccent,
+                            shape = CircleShape
+                        ) {
+                            Icon(Icons.Default.Remove, contentDescription = "Zoom Out", modifier = Modifier.size(18.dp))
+                        }
+
+                        // Reset View
+                        SmallFloatingActionButton(
+                            onClick = {
+                                zoomScale = 1f
+                                panOffset = androidx.compose.ui.geometry.Offset.Zero
+                            },
+                            containerColor = CardDarkBg.copy(alpha = 0.9f),
+                            contentColor = TextPrimary,
+                            shape = CircleShape
+                        ) {
+                            Icon(Icons.Default.Refresh, contentDescription = "Reset View", modifier = Modifier.size(18.dp))
+                        }
+                    }
+
+                    // Map Hint Badge (Pinch & drag indicator)
+                    Surface(
+                        color = Color.Black.copy(alpha = 0.65f),
+                        shape = RoundedCornerShape(12.dp),
+                        modifier = Modifier
+                            .align(Alignment.TopStart)
+                            .padding(8.dp)
+                    ) {
+                        Text(
+                            text = "Pinch or tap +/- to zoom · Tap pins for details",
+                            color = Color.White.copy(alpha = 0.75f),
+                            fontSize = 10.sp,
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                        )
+                    }
                 }
             }
 

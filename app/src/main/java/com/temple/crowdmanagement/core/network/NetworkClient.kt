@@ -57,10 +57,11 @@ data class RemoteVolunteer(
 
 object NetworkClient {
     // Priority order: adb reverse localhost -> local Wi-Fi LAN IP -> Android emulator
+    // The YatraFlow Bridge Server must be running: cd bridge-server && node server.js
     private val CANDIDATE_BASE_URLS = listOf(
         "http://localhost:8000",
-        "http://172.25.185.155:8000",
-        "http://10.0.2.2:8000"
+        "http://10.0.2.2:8000",
+        "http://172.25.185.155:8000"
     )
 
     @Volatile
@@ -276,5 +277,48 @@ object NetworkClient {
         } catch (_: Exception) {
             null
         }
+    }
+
+    /**
+     * Sync a confirmed booking to the bridge server so the web admin
+     * Booking Operations page shows it in real-time.
+     */
+    suspend fun postBooking(
+        templeId: String,
+        slotTime: String,
+        devoteeCount: Int,
+        name: String
+    ): Boolean {
+        val payload = JSONObject().apply {
+            put("templeId", templeId)
+            put("time", slotTime)
+            put("devoteeCount", devoteeCount)
+            put("name", name)
+            put("source", "mobile")
+        }
+        val response = httpPost("/api/bookings", payload)
+        return response != null
+    }
+
+    /**
+     * Dispatch an SOS event directly to the bridge server's /api/incidents
+     * endpoint (same as createIncident but explicit for SOS use).
+     */
+    suspend fun postSOS(
+        templeId: String,
+        alertType: String,
+        location: String
+    ): Boolean {
+        val payload = JSONObject().apply {
+            put("temple_id", templeId)
+            put("templeId", templeId)
+            put("title", "EMERGENCY SOS: $alertType")
+            put("description", "Pilgrim activated mobile panic SOS at $location")
+            put("severity", "CRITICAL")
+            put("location", location)
+            put("reported_by", "Pilgrim Mobile App (SOS Button)")
+        }
+        val response = httpPost("/api/incidents", payload)
+        return response != null
     }
 }
