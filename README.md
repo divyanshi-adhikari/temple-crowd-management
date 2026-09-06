@@ -152,7 +152,7 @@ temple-crowd-management/
 ├── .gitignore
 ├── README.md
 └── LICENSE
-
+```
 ## 🚀 Getting Started
 
 ### Prerequisites
