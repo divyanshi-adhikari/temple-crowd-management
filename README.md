@@ -1,76 +1,231 @@
-# 🛕 SVH26008 - Temple & Pilgrimage Crowd Management Mobile App (Android / Kotlin)
+# 📱 DARSHAN — Temple Crowd Management System
 
-> **Problem Statement ID**: SVH26008  
-> **Title**: Temple & Pilgrimage Crowd Management (Somnath, Dwarka, Ambaji, Pavagadh)  
-> **Organization**: Gujarat Council on Science & Technology (GUJCOST), Dept. of Science & Technology, Govt. of Gujarat  
-> **Category**: Software | **Theme**: Heritage & Culture  
+> **DARSHAN** — *Devotee Assistance & Real-time Security Handling And Navigation*
+
+A comprehensive temple crowd management system designed to enhance the spiritual experience of pilgrims while ensuring safety and security through intelligent crowd monitoring and real-time communication.
 
 ---
 
-## 👨‍💻 Work Division & Architecture Overview
+## 📋 Table of Contents
 
-The app is structured into strict feature module boundaries to enable parallel work between **Developer 1** and **Developer 2** without code collisions.
+- [About DARSHAN](#-about-darshan)
+- [Features](#-features)
+  - [Pilgrim Features](#-pilgrim-features)
+  - [Security Features](#️-security-features)
+- [Tech Stack](#️-tech-stack)
+  - [Frontend — Android](#frontend--android)
+  - [Backend — API](#backend--api)
+  - [Infrastructure](#infrastructure)
+- [Architecture](#️-architecture)
+- [Project Structure](#-project-structure)
+- [Getting Started](#-getting-started)
+- [Future Scope](#-future-scope)
+- [Contributors](#-contributors)
+- [License](#-license)
+
+---
+
+## 🙏 About DARSHAN
+
+**DARSHAN** *(Devotee Assistance & Real-time Security Handling And Navigation)* is a comprehensive temple crowd management system designed to enhance the spiritual experience of pilgrims while ensuring safety and security through intelligent crowd monitoring and real-time communication.
+
+The system consists of:
+
+- 📱 **Android Application** — Pilgrim & Security roles
+- 🖥️ **Controller Website** — Command Center
+- 🔗 **Backend API** — FastAPI
+- 🔔 **Real-time Notification System** — Firebase FCM
+
+---
+
+## ✨ Features
+
+### 👤 Pilgrim Features
+
+| Feature | Description |
+|---|---|
+| **Multi-Temple Support** | View real-time data for Somnath, Dwarka, and Ambaji temples |
+| **Live Crowd Status** | Real-time crowd levels with AI predictions |
+| **Darshan Booking** | Book VIP/Regular darshan slots |
+| **Smart Queue** | Join queue, view wait time, and receive notifications |
+| **Live Temple Map** | Interactive map with crowd heat zones |
+| **AI Predictions** | Best time to visit based on historical data |
+| **Weather Updates** | Real-time weather information |
+| **Pilgrim Guide** | Temple information, Aarti timings, FAQs, and contacts |
+| **Emergency SOS** | One-tap emergency alert with location |
+| **Multi-Language** | English, Hindi, and Gujarati support |
+
+### 🛡️ Security Features
+
+| Feature | Description |
+|---|---|
+| **Security Dashboard** | Role-specific dashboard for security personnel |
+| **Real-time Alerts** | Receive alerts from the Controller |
+| **Alert Acknowledgment** | Acknowledge and respond to alerts |
+| **Smart Duty Status** | On Duty / On Break / Off Duty |
+| **Incident Reporting** | Report Security, Medical, Crowd, and Emergency incidents |
+| **Emergency Trigger** | One-tap emergency alert to the Controller |
+| **Contact Controller** | Send messages or call the Controller |
+| **Duty Management** | View shift timings and assigned zones |
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend (Android)
+
+| Category | Technology | Version |
+|---|---|---|
+| **Language** | Kotlin | 1.9.0 |
+| **UI Framework** | Jetpack Compose | 2024.02.00 |
+| **Material Design** | Material 3 | 1.2.0 |
+| **Navigation** | Navigation Compose | 2.7.5 |
+| **State Management** | ViewModel + Flow | 2.7.0 |
+| **Data Storage** | DataStore Preferences | 1.0.0 |
+| **Networking** | Retrofit | 2.9.0 |
+| **Image Loading** | Coil | 2.5.0 |
+| **Notifications** | Firebase FCM | 33.1.0 |
+| **Dependency Injection** | Manual (Hilt ready) | — |
+
+### Backend (API)
+
+| Category | Technology | Version |
+|---|---|---|
+| **Language** | Python | 3.10+ |
+| **Framework** | FastAPI | 0.104.1 |
+| **Server** | Uvicorn | 0.24.0 |
+| **Data Validation** | Pydantic | 2.5.0 |
+| **Push Notifications** | Firebase Admin SDK | 6.4.0 |
+| **Database** | MongoDB / PostgreSQL | — |
+| **Caching** | Redis | — |
+
+### Infrastructure
+
+| Service | Technology |
+|---|---|
+| **Authentication** | JWT / Firebase Auth |
+| **Push Notifications** | Firebase Cloud Messaging (FCM) |
+| **Cloud Platform** | Firebase / AWS |
+| **CI/CD** | GitHub Actions |
+
+---
+
+## Project Structure
+C:\temple-crowd-management\
+│
+├── app/
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/com/temple/crowdmanagement/
+│   │   │   │   │
+│   │   │   │   ├── core/
+│   │   │   │   │   ├── model/          # Data models
+│   │   │   │   │   └── navigation/     # Navigation setup
+│   │   │   │   │
+│   │   │   │   ├── features/
+│   │   │   │   │   ├── auth/           # Authentication
+│   │   │   │   │   ├── dashboard/      # Pilgrim Dashboard
+│   │   │   │   │   ├── security/       # Security Features
+│   │   │   │   │   ├── guide/          # Pilgrim Guide
+│   │   │   │   │   ├── profile/        # User Profile
+│   │   │   │   │   ├── booking/        # Darshan Booking
+│   │   │   │   │   ├── queue/          # Smart Queue
+│   │   │   │   │   ├── map/            # Live Temple Map
+│   │   │   │   │   └── emergency/      # Emergency SOS
+│   │   │   │   │
+│   │   │   │   └── ui/theme/           # UI Theme
+│   │   │   │
+│   │   │   └── res/                    # Resources
+│   │   │
+│   │   └── AndroidManifest.xml
+│   │
+│   └── build.gradle.kts                 # App-level build
+│
+├── gradle/
+│   └── libs.versions.toml              # Version catalog
+│
+├── build.gradle.kts                     # Project-level build
+├── settings.gradle.kts
+└── README.md
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+| Tool           | Version             |
+| -------------- | -------------------- |
+| Android Studio | Hedgehog 2023.1.1+   |
+| JDK            | 17                   |
+| Kotlin         | 1.9.0                |
+
+---
+
+### 1. Clone & Open
+
+```bash
+git clone https://github.com/yourusername/temple-crowd-management.git
+```
+
+1. Open project in Android Studio
+2. Wait for Gradle sync to complete
+
+---
+
+### 2. Run the App
+
+1. Select emulator or connect real device
+2. Click **Run ▶️** button
+3. App opens on device
+
+---
+
+### 3. Login Credentials
+
+| Role     | Email                | Password    |
+| -------- | --------------------- | ----------- |
+| Pilgrim  | test@example.com      | password123 |
+| Security | security@temple.com   | password123 |
+
+---
+
+### 4. Quick Test Flow
 
 ```
-app/src/main/java/com/temple/crowdmanagement/
-├── MainActivity.kt
-├── ui/theme/                       # Shared Spiritual Color Tokens & Typography
-├── core/                           # Common Navigation & Data Models
-└── features/                       # ⚠️ STRICT NO-CROSSING ZONES
-    ├── auth/                       # 👈 DEV 1 WORKSPACE (Login, Signup, Multilingual)
-    ├── dashboard/                  # 👈 DEV 1 WORKSPACE (Live status, Weather, Timings)
-    ├── guide/                      # 👈 DEV 1 WORKSPACE (Pilgrim guide, Aarti, FAQs)
-    ├── profile/                    # 👈 DEV 1 WORKSPACE (Profile, Pass History, Settings)
-    ├── booking/                    # 👈 DEV 2 WORKSPACE (Smart Darshan Pass & Slots)
-    ├── map/                        # 👈 DEV 2 WORKSPACE (Live Canvas Map & Heatmap)
-    ├── queue/                      # 👈 DEV 2 WORKSPACE (Smart Virtual Queue Engine)
-    └── emergency/                  # 👈 DEV 2 WORKSPACE (Panic SOS & Offline Mesh Relay)
+Login → Select Role → Enter Credentials → Click Sign In → Dashboard Opens
 ```
 
 ---
 
-## 🚀 Implemented Developer 2 Features (Action & Interactive Systems)
+### 5. Troubleshooting
 
-### 1. 🎫 Smart Darshan Booking (`features/booking`)
-- **Multi-Temple Support**: Switch between **Somnath**, **Dwarka**, **Ambaji**, and **Pavagadh**.
-- **Interactive Time Slot Selection**: Displays live slot capacities, percent full indicator bars, and special **Aarti** slot flags.
-- **Pass Generation with QR Code**: Generates digital QR passes (`TC-XXXXXX`) with lead devotee details and count.
-- **My Passes Archive**: Interactive list of active and historic darshan passes.
+| Issue              | Fix                                                  |
+| ------------------- | ----------------------------------------------------- |
+| Gradle sync fails   | File → Invalidate Caches → Invalidate and Restart     |
+| App won't install   | Build → Clean Project → Rebuild Project               |
+| Emulator issues     | Tools → AVD Manager → Wipe Data                       |
 
-### 2. 🗺️ Live Temple Map & Crowd Heatmap (`features/map`)
-- **Custom Jetpack Compose Canvas**: Custom architectural floorplan drawing with real-time radial crowd heat zones.
-- **Color-Coded Crowd Density**: Red (Critical Overcrowding), Orange (Heavy/Moderate), Green (Smooth Flow).
-- **POI Interactive Layers**: Filter chips to toggle Entry/Exit Gates, Parking Spaces with capacity counts, Medical Stations, Washrooms, and Water points.
-
-### 3. ⏱️ Smart Virtual Queue Engine (`features/queue`)
-- **One-Tap Virtual Entry**: Devotees join virtual queues remotely without standing in physical lines.
-- **Real-time Live Ticker**: Token ID, current queue position countdown, and estimated waiting duration.
-- **Notify Me Engine**: Push alert engine triggering when devotees are within 5 minutes of sanctum entry.
-- **Queue Analytics**: Live crowd flow rate metrics (e.g. 145 devotees cleared per 10 mins).
-
-### 4. 🚨 Emergency SOS & Offline Mesh Relay (`features/emergency`)
-- **Panic SOS Trigger**: Rapid 1-tap SOS trigger broadcasting GPS coordinates.
-- **Direct Category Alerts**: Medical Assistance, Stampede Hazard, Fire Risk, and Lost Person.
-- **Offline Mesh Protocol Simulation**: Simulates peer-to-peer Bluetooth Low Energy (BLE) packet forwarding to nearest security marshals when cellular network is disconnected.
 
 ---
 
-## 🛠️ How to Open & Test in Android Studio
+## 🔮 Future Scope
 
-1. **Open Android Studio**:
-   - Click `File` -> `Open...` and select the folder:
-     `Temple Crowd management app`
+| Feature                               | Description                                |
+| -------------------------------------- | ------------------------------------------- |
+| 🧠 **Advanced AI**                     | Predictive crowd analytics with ML models   |
+| 📊 **Real-time Analytics Dashboard**   | Live temple statistics and trends           |
+| 🗣️ **Voice Assistance**                | Voice-guided navigation for pilgrims        |
+| 📍 **GPS Tracking**                    | Live tracking of security personnel         |
+| 🎥 **CCTV Integration**                | Live camera feed integration                |
+| 📱 **Wearable Support**                | Smartwatch app for security                 |
+| 🤖 **Chatbot**                         | AI-powered pilgrim assistance                |
+| 📈 **Historical Data**                 | Temple visit trends and patterns            |
+| 🌐 **Multi-Language Expansion**        | Support for more regional languages         |
+| 🔗 **Third-party Integration**         | Payment gateways, transport APIs            |
 
-2. **Sync Gradle**:
-   - Android Studio will detect Gradle wrapper and sync dependencies automatically.
-   - Wait for `Gradle Sync Finished Successfully`.
+---
 
-3. **Run on Emulator / Connected Android Device**:
-   - Select an Android Virtual Device (AVD - Android 8.0 / API 26 or higher recommended).
-   - Press **Run 'app'** (`Shift + F10` or the green Play icon).
+## 📄 License
 
-4. **Testing Developer 2 Features**:
-   - **Map Tab**: Switch between Somnath/Dwarka/Ambaji/Pavagadh, tap heat zone circles to view live capacity, and filter POI chips.
-   - **Queue Tab**: Tap `GET VIRTUAL QUEUE TOKEN`, test `SIMULATE STEP` to watch queue position decrease in real-time, and toggle `Notify Me Engine`.
-   - **Booking Tab**: Select slot, set devotee count, and click `CONFIRM & GENERATE QR PASS`.
-   - **Emergency Tab**: Test panic SOS, toggle `Network Offline (Mesh Protocol Active)`, and trigger category alerts.
+This project is currently under development.
+
+License information will be added soon.
