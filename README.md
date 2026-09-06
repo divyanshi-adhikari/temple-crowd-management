@@ -109,44 +109,49 @@ The system consists of:
 | **CI/CD** | GitHub Actions |
 
 ---
+## 🏗️ Project Architecture
 
-## Project Structure
-C:\temple-crowd-management\
+```text
+temple-crowd-management/
 │
 ├── app/
+│   └── src/
+│       └── main/
+│           ├── java/
+│           │   └── com/
+│           │       └── temple/
+│           │           └── crowdmanagement/
+│           │               ├── features/
+│           │               │   ├── auth/
+│           │               │   ├── home/
+│           │               │   ├── booking/
+│           │               │   ├── queue/
+│           │               │   ├── map/
+│           │               │   ├── emergency/
+│           │               │   ├── guide/
+│           │               │   ├── profile/
+│           │               │   └── security/
+│           │               │
+│           │               ├── navigation/
+│           │               ├── data/
+│           │               ├── ui/
+│           │               └── MainActivity.kt
+│           │
+│           └── res/
+│
+├── backend/
+│   ├── main.py
+│   ├── requirements.txt
+│   └── ...
+│
+├── controller-website/
 │   ├── src/
-│   │   ├── main/
-│   │   │   ├── java/com/temple/crowdmanagement/
-│   │   │   │   │
-│   │   │   │   ├── core/
-│   │   │   │   │   ├── model/          # Data models
-│   │   │   │   │   └── navigation/     # Navigation setup
-│   │   │   │   │
-│   │   │   │   ├── features/
-│   │   │   │   │   ├── auth/           # Authentication
-│   │   │   │   │   ├── dashboard/      # Pilgrim Dashboard
-│   │   │   │   │   ├── security/       # Security Features
-│   │   │   │   │   ├── guide/          # Pilgrim Guide
-│   │   │   │   │   ├── profile/        # User Profile
-│   │   │   │   │   ├── booking/        # Darshan Booking
-│   │   │   │   │   ├── queue/          # Smart Queue
-│   │   │   │   │   ├── map/            # Live Temple Map
-│   │   │   │   │   └── emergency/      # Emergency SOS
-│   │   │   │   │
-│   │   │   │   └── ui/theme/           # UI Theme
-│   │   │   │
-│   │   │   └── res/                    # Resources
-│   │   │
-│   │   └── AndroidManifest.xml
-│   │
-│   └── build.gradle.kts                 # App-level build
+│   ├── package.json
+│   └── ...
 │
-├── gradle/
-│   └── libs.versions.toml              # Version catalog
-│
-├── build.gradle.kts                     # Project-level build
-├── settings.gradle.kts
-└── README.md
+├── .gitignore
+├── README.md
+└── LICENSE
 
 ## 🚀 Getting Started
 
