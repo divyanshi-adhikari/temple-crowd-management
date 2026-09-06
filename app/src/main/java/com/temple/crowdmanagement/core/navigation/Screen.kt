@@ -14,4 +14,8 @@ sealed class Screen(val route: String, val title: String) {
     object Dashboard : Screen("dashboard", "Home")
     object Guide : Screen("guide", "Guide")
     object Profile : Screen("profile", "Profile")
+    
+    // ============ SECURITY ROUTES ============
+    object SecurityDashboard : Screen("security_dashboard", "Security Dashboard")
+    object SecurityNotifications : Screen("security_notifications", "Notifications")  // ✅ ADD THIS
 }
