@@ -106,6 +106,22 @@ class AuthViewModel(private val context: Context) : ViewModel() {
         }
     }
 
+    // ✅ NEW: Clear session without logging out (for testing)
+    fun clearSession() {
+        viewModelScope.launch {
+            context.dataStore.edit { prefs ->
+                // Clear only auth-related keys
+                prefs.remove(booleanPreferencesKey("logged_in"))
+                prefs.remove(stringPreferencesKey("name"))
+                prefs.remove(stringPreferencesKey("email"))
+                prefs.remove(stringPreferencesKey("phone"))
+            }
+            _isLoggedIn.value = false
+            _userName.value = ""
+            _error.value = null
+        }
+    }
+
     fun updateLanguage(lang: String) {
         viewModelScope.launch {
             context.dataStore.edit { prefs ->
@@ -115,7 +131,6 @@ class AuthViewModel(private val context: Context) : ViewModel() {
         }
     }
 
-    // ============ PUBLIC METHOD FOR SHOWING ERRORS ============
     fun showError(message: String) {
         _error.value = message
     }
