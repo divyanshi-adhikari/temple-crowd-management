@@ -15,6 +15,7 @@ import com.temple.crowdmanagement.ui.theme.SpiritualDarkBg
 @Composable
 fun DashboardScreen(
     viewModel: HomeViewModel = viewModel(),
+    onLogout: () -> Unit = {},
     onLiveMapClick: () -> Unit = {},
     onBookDarshanClick: () -> Unit = {},
     onSOSClick: () -> Unit = {},
@@ -25,25 +26,21 @@ fun DashboardScreen(
 
     LaunchedEffect(Unit) { viewModel.loadDashboardData() }
 
-    val selectedTemple by viewModel.selectedTemple.collectAsState()
-
-    // The top bar is a custom Box (not TopAppBar) so we don't use Scaffold's topBar slot
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(SpiritualDarkBg)
     ) {
-        // Maroon header (handles its own top padding / status bar area)
+        // ✅ Updated DashboardTopBar - No temple selector
         DashboardTopBar(
-            selectedTemple = selectedTemple,
-            onSelectTemple = { viewModel.selectTemple(it) },
             isTempleOpen   = uiState.isTempleOpen,
             crowdFlowLabel = when (uiState.crowdStatus.lowercase()) {
                 "low"      -> "Smooth Flow"
                 "moderate" -> "Moderate Flow"
                 "high"     -> "Heavy Flow"
                 else       -> "Smooth Flow"
-            }
+            },
+            onLogout = onLogout
         )
 
         if (isLoading) {
@@ -56,7 +53,6 @@ fun DashboardScreen(
                 contentPadding = PaddingValues(horizontal = 20.dp, vertical = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(14.dp)
             ) {
-                // Welcome greeting
                 item {
                     HeaderSection(
                         name   = uiState.devoteeName,
@@ -64,7 +60,6 @@ fun DashboardScreen(
                     )
                 }
 
-                // Hero — Live Crowd Ring Gauge
                 item {
                     CrowdStatusCard(
                         status          = uiState.crowdStatus,
@@ -77,7 +72,6 @@ fun DashboardScreen(
                     )
                 }
 
-                // Temple Timings (Aarti times are key pilgrim info)
                 item {
                     TempleTimingsCard(
                         openingTime = uiState.openingTime,
@@ -87,7 +81,6 @@ fun DashboardScreen(
                     )
                 }
 
-                // Primary & secondary action rows
                 item {
                     ActionsGrid(
                         onLiveMapClick      = onLiveMapClick,
@@ -97,7 +90,6 @@ fun DashboardScreen(
                     )
                 }
 
-                // AI Prediction
                 item {
                     CrowdPredictionCard(
                         prediction = uiState.aiPrediction,
@@ -106,7 +98,6 @@ fun DashboardScreen(
                     )
                 }
 
-                // Weather
                 item {
                     WeatherCard(
                         temperature = uiState.temperature,
@@ -118,10 +109,8 @@ fun DashboardScreen(
                     )
                 }
 
-                // Today's Events
                 item { TodayEventsCard(events = uiState.todayEvents) }
 
-                // Bottom padding so FAB doesn't overlap last card
                 item { Spacer(modifier = Modifier.height(80.dp)) }
             }
         }

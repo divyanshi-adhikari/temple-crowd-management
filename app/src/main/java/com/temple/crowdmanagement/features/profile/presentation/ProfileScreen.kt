@@ -1,6 +1,7 @@
 package com.temple.crowdmanagement.features.profile.presentation
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -10,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -19,6 +21,9 @@ import com.temple.crowdmanagement.ui.theme.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
+    onLogout: () -> Unit = {},
+    onSettingsClick: () -> Unit = {},        // ✅ NEW
+    onEditProfileClick: () -> Unit = {},     // ✅ NEW
     viewModel: ProfileViewModel = viewModel()
 ) {
     val profileData by viewModel.profileData.collectAsState()
@@ -40,14 +45,16 @@ fun ProfileScreen(
                     )
                 },
                 actions = {
-                    IconButton(onClick = { /* Edit Profile */ }) {
+                    // ✅ Edit Profile - Now calls onEditProfileClick
+                    IconButton(onClick = onEditProfileClick) {
                         Icon(
                             Icons.Default.Edit,
                             contentDescription = "Edit Profile",
                             tint = SaffronPrimary
                         )
                     }
-                    IconButton(onClick = { /* Settings */ }) {
+                    // ✅ Settings - Now calls onSettingsClick
+                    IconButton(onClick = onSettingsClick) {
                         Icon(
                             Icons.Default.Settings,
                             contentDescription = "Settings",
@@ -96,8 +103,7 @@ fun ProfileScreen(
                     ProfileHeader(
                         userName = profileData.userName,
                         userRole = profileData.userRole,
-                        userEmail = profileData.userEmail,
-                       
+                        userEmail = profileData.userEmail
                     )
                 }
 
@@ -121,6 +127,13 @@ fun ProfileScreen(
                     HelpSection()
                 }
 
+                // Logout Button
+                item {
+                    LogoutButton(
+                        onLogout = onLogout
+                    )
+                }
+
                 // Version
                 item {
                     Box(
@@ -137,6 +150,44 @@ fun ProfileScreen(
                     }
                 }
             }
+        }
+    }
+}
+
+// ============ LOGOUT BUTTON ============
+@Composable
+fun LogoutButton(
+    onLogout: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onLogout() },
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = StatusRed.copy(alpha = 0.1f)
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Icon(
+                Icons.Default.Logout,
+                contentDescription = "Logout",
+                tint = StatusRed,
+                modifier = Modifier.size(24.dp)
+            )
+            Spacer(modifier = Modifier.width(10.dp))
+            Text(
+                text = "Logout",
+                color = StatusRed,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }
