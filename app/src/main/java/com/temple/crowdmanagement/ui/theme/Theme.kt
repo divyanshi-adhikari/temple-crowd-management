@@ -11,11 +11,14 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
+// ✅ REMOVED color definitions - they exist elsewhere
+// Just use the existing colors directly
+
 private val CustomColorScheme = darkColorScheme(
-    primary          = SaffronPrimary,          // Heritage maroon
+    primary          = SaffronPrimary,          // Uses existing definition
     onPrimary        = Color.White,
     primaryContainer = ElevatedSurface,
-    secondary        = GoldAccent,              // Warm gold
+    secondary        = GoldAccent,
     onSecondary      = Color.White,
     tertiary         = StatusGreen,
     onTertiary       = Color.White,
@@ -42,14 +45,11 @@ fun TempleTheme(
         SideEffect {
             val window = (view.context as? Activity)?.window
             window?.let {
-                // Status bar matches the maroon top bar
-                it.statusBarColor = SaffronDark.toArgb()
+                it.statusBarColor = SaffronPrimary.toArgb()
                 val insetsController = WindowCompat.getInsetsController(it, view)
-                insetsController.isAppearanceLightStatusBars = false // White text/icons on dark maroon status bar
-                
-                // Navigation bar matches the warm sand/cream bg
+                insetsController.isAppearanceLightStatusBars = true
                 it.navigationBarColor = SpiritualDarkBg.toArgb()
-                insetsController.isAppearanceLightNavigationBars = true // Dark icons on light sand nav bar
+                insetsController.isAppearanceLightNavigationBars = true
             }
         }
     }
