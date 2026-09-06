@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.temple.crowdmanagement.features.security.model.IncidentType
 import com.temple.crowdmanagement.features.security.model.IncidentPriority
+import com.temple.crowdmanagement.features.security.model.IncidentPriority.*
+import androidx.compose.foundation.clickable
 import com.temple.crowdmanagement.ui.theme.*
 
 @Composable
@@ -62,7 +64,7 @@ fun IncidentReportingDialog(
                         text = "🚨 Report Incident",
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        color = Color.Black
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     IconButton(onClick = onDismiss) {
@@ -88,7 +90,7 @@ fun IncidentReportingDialog(
                     text = "Incident Type *",
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Medium,
-                    color = Color.White
+                    color = Color.Black
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 OutlinedTextField(
@@ -142,7 +144,7 @@ fun IncidentReportingDialog(
                                     Text(
                                         text = type.displayName,
                                         fontSize = 14.sp,
-                                        color = if (selectedType == type) SaffronPrimary else Color.White
+                                        color = if (selectedType == type) SaffronPrimary else Color.Black
                                     )
                                     if (selectedType == type) {
                                         Spacer(modifier = Modifier.weight(1f))
@@ -164,7 +166,7 @@ fun IncidentReportingDialog(
                     text = "Priority *",
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Medium,
-                    color = Color.White
+                    color = Color.Black
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 OutlinedTextField(
@@ -201,10 +203,11 @@ fun IncidentReportingDialog(
                             IncidentPriority.values().forEach { priority ->
                                 // ✅ Fixed: Use Surface instead of Box with background
                                 val priorityColor = when (priority) {
-                                    IncidentPriority.LOW -> Color(0xFF8BC34A)
-                                    IncidentPriority.MEDIUM -> Color(0xFFFFC107)
-                                    IncidentPriority.HIGH -> Color(0xFFFF9800)
-                                    IncidentPriority.CRITICAL -> Color(0xFFF44336)
+                                    LOW -> Color(0xFF8BC34A)
+                                    MEDIUM -> Color(0xFFFFC107)
+                                    HIGH -> Color(0xFFFF9800)
+                                    CRITICAL -> Color(0xFFF44336)
+                                    URGENT -> TODO()
                                 }
                                 
                                 Row(
@@ -228,7 +231,7 @@ fun IncidentReportingDialog(
                                     Text(
                                         text = priority.displayName,
                                         fontSize = 14.sp,
-                                        color = if (selectedPriority == priority) SaffronPrimary else Color.White
+                                        color = if (selectedPriority == priority) SaffronPrimary else Color.Black
                                     )
                                     if (selectedPriority == priority) {
                                         Spacer(modifier = Modifier.weight(1f))
@@ -329,7 +332,7 @@ fun IncidentReportingDialog(
                         text = "Submit Incident",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        color = Color.Black
                     )
                 }
             }

@@ -29,7 +29,7 @@ fun QuickActionsSection(
             .shadow(8.dp, RoundedCornerShape(20.dp), clip = false),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = SpiritualDarkBg
+            containerColor = SpiritualDarkBg  // ✅ Using the correct background color
         )
     ) {
         Column(
@@ -41,7 +41,7 @@ fun QuickActionsSection(
                 text = "Quick Actions",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = TextPrimary
             )
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -54,7 +54,7 @@ fun QuickActionsSection(
                     modifier = Modifier.weight(1f),
                     icon = "🚨",
                     label = "Report Incident",
-                    color = DangerRed,
+                    color = StatusRed,
                     onClick = onReportIncident
                 )
                 QuickActionItem(

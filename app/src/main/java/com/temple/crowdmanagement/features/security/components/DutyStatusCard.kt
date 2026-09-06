@@ -26,9 +26,9 @@ fun DutyStatusCard(
     onChangeStatus: () -> Unit
 ) {
     val statusColor = when (dutyInfo.status) {
-        DutyStatus.ON_DUTY -> SuccessGreen
+        DutyStatus.ON_DUTY -> StatusGreen
         DutyStatus.ON_BREAK -> WarningYellow
-        DutyStatus.OFF_DUTY -> DangerRed
+        DutyStatus.OFF_DUTY -> StatusRed
     }
 
     Card(
@@ -37,7 +37,7 @@ fun DutyStatusCard(
             .shadow(8.dp, RoundedCornerShape(20.dp), clip = false),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = SpiritualDarkBg
+            containerColor = SpiritualDarkBg  // ✅ Using the correct background color
         )
     ) {
         Column(
@@ -97,7 +97,6 @@ fun DutyStatusCard(
                     }
                 }
 
-                // ✅ Fixed: Change Status Button
                 TextButton(
                     onClick = onChangeStatus,
                     colors = ButtonDefaults.textButtonColors(
@@ -114,12 +113,11 @@ fun DutyStatusCard(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Shift Info - ✅ Fixed weight usage
+            // Shift Info
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                // Shift Info
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
@@ -141,13 +139,12 @@ fun DutyStatusCard(
                                 text = "${dutyInfo.shiftStart} - ${dutyInfo.shiftEnd}",
                                 fontSize = 13.sp,
                                 fontWeight = FontWeight.Medium,
-                                color = Color.White
+                                color = TextPrimary
                             )
                         }
                     }
                 }
 
-                // Zone Info
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
@@ -169,7 +166,7 @@ fun DutyStatusCard(
                                 text = dutyInfo.assignedZone,
                                 fontSize = 13.sp,
                                 fontWeight = FontWeight.Medium,
-                                color = Color.White
+                                color = TextPrimary
                             )
                         }
                     }
