@@ -114,44 +114,147 @@ The system consists of:
 ```text
 temple-crowd-management/
 │
+├── .idea/                                  # Android Studio project settings
+│
 ├── app/
-│   └── src/
-│       └── main/
-│           ├── java/
-│           │   └── com/
-│           │       └── temple/
-│           │           └── crowdmanagement/
-│           │               ├── features/
-│           │               │   ├── auth/
-│           │               │   ├── home/
-│           │               │   ├── booking/
-│           │               │   ├── queue/
-│           │               │   ├── map/
-│           │               │   ├── emergency/
-│           │               │   ├── guide/
-│           │               │   ├── profile/
-│           │               │   └── security/
-│           │               │
-│           │               ├── navigation/
-│           │               ├── data/
-│           │               ├── ui/
-│           │               └── MainActivity.kt
-│           │
-│           └── res/
+│   ├── src/
+│   │   └── main/
+│   │       ├── java/
+│   │       │   └── com/
+│   │       │       └── temple/
+│   │       │           └── crowdmanagement/
+│   │       │               ├── MainActivity.kt
+│   │       │               │
+│   │       │               ├── core/
+│   │       │               │   ├── model/
+│   │       │               │   │   └── TempleSite.kt
+│   │       │               │   └── navigation/
+│   │       │               │       ├── NavGraph.kt
+│   │       │               │       └── Screen.kt
+│   │       │               │
+│   │       │               ├── features/
+│   │       │               │   ├── auth/
+│   │       │               │   │   ├── AuthViewModel.kt
+│   │       │               │   │   ├── LoginScreen.kt
+│   │       │               │   │   ├── SignupScreen.kt
+│   │       │               │   │   └── LanguageScreen.kt
+│   │       │               │   │
+│   │       │               │   ├── dashboard/
+│   │       │               │   │   ├── presentation/
+│   │       │               │   │   │   ├── DashboardScreen.kt
+│   │       │               │   │   │   └── HomeViewModel.kt
+│   │       │               │   │   ├── components/
+│   │       │               │   │   │   ├── ActionGrid.kt
+│   │       │               │   │   │   ├── AppLoadingScreen.kt
+│   │       │               │   │   │   ├── CrowdPredictionCard.kt
+│   │       │               │   │   │   ├── CrowdStatusCard.kt
+│   │       │               │   │   │   ├── DashboardTopBar.kt
+│   │       │               │   │   │   ├── HeaderSection.kt
+│   │       │               │   │   │   ├── TempleTimingsCard.kt
+│   │       │               │   │   │   ├── TodayEventsCard.kt
+│   │       │               │   │   │   └── WeatherCard.kt
+│   │       │               │   │   ├── model/
+│   │       │               │   │   │   └── DashboardUiState.kt
+│   │       │               │   │   └── repository/
+│   │       │               │   │       └── DashboardRepository.kt
+│   │       │               │   │
+│   │       │               │   ├── security/
+│   │       │               │   │   ├── presentation/
+│   │       │               │   │   │   ├── SecurityAuthViewModel.kt
+│   │       │               │   │   │   ├── SecurityDashboardScreen.kt
+│   │       │               │   │   │   ├── SecurityDashboardViewModel.kt
+│   │       │               │   │   │   ├── SecurityNotificationScreen.kt
+│   │       │               │   │   │   └── SecurityNotificationViewModel.kt
+│   │       │               │   │   ├── components/
+│   │       │               │   │   │   ├── ContactControllerDialog.kt
+│   │       │               │   │   │   ├── DutyStatusCard.kt
+│   │       │               │   │   │   ├── DutyStatusDialog.kt
+│   │       │               │   │   │   ├── IncidentReportingDialog.kt
+│   │       │               │   │   │   └── QuickActionsSection.kt
+│   │       │               │   │   └── model/
+│   │       │               │   │       ├── DutyStatus.kt
+│   │       │               │   │       └── IncidentData.kt
+│   │       │               │   │
+│   │       │               │   ├── booking/
+│   │       │               │   │   └── presentation/
+│   │       │               │   │       └── BookingScreen.kt
+│   │       │               │   │
+│   │       │               │   ├── queue/
+│   │       │               │   │   └── presentation/
+│   │       │               │   │       └── SmartQueueScreen.kt
+│   │       │               │   │
+│   │       │               │   ├── map/
+│   │       │               │   │   └── presentation/
+│   │       │               │   │       └── LiveTempleMapScreen.kt
+│   │       │               │   │
+│   │       │               │   ├── emergency/
+│   │       │               │   │   └── presentation/
+│   │       │               │   │       └── EmergencySOSScreen.kt
+│   │       │               │   │
+│   │       │               │   ├── guide/
+│   │       │               │   │   ├── presentation/
+│   │       │               │   │   │   ├── GuideScreen.kt
+│   │       │               │   │   │   └── GuideViewModel.kt
+│   │       │               │   │   ├── components/
+│   │       │               │   │   │   ├── AartiTimingsCard.kt
+│   │       │               │   │   │   ├── ContactCard.kt
+│   │       │               │   │   │   ├── FAQSection.kt
+│   │       │               │   │   │   ├── QuickInfoCard.kt
+│   │       │               │   │   │   └── TempleInfoCard.kt
+│   │       │               │   │   ├── model/
+│   │       │               │   │   │   └── GuideData.kt
+│   │       │               │   │   └── repository/
+│   │       │               │   │       └── GuideRepository.kt
+│   │       │               │   │
+│   │       │               │   └── profile/
+│   │       │               │       ├── presentation/
+│   │       │               │       │   ├── ProfileScreen.kt
+│   │       │               │       │   └── ProfileViewModel.kt
+│   │       │               │       ├── components/
+│   │       │               │       │   ├── HelpSection.kt
+│   │       │               │       │   ├── ProfileHeader.kt
+│   │       │               │       │   ├── QuickSettingsCard.kt
+│   │       │               │       │   ├── RecentBookingCard.kt
+│   │       │               │       │   └── VisitPreferencesCard.kt
+│   │       │               │       ├── model/
+│   │       │               │       │   └── ProfileData.kt
+│   │       │               │       └── repository/
+│   │       │               │           └── ProfileRepository.kt
+│   │       │               │
+│   │       │               └── ui/
+│   │       │                   └── theme/
+│   │       │                       ├── Theme.kt
+│   │       │                       ├── Color.kt
+│   │       │                       └── Typography.kt
+│   │       │
+│   │       └── res/
+│   │           ├── drawable/
+│   │           │   └── ic_notification.xml
+│   │           ├── mipmap/
+│   │           └── values/
+│   │               ├── colors.xml
+│   │               └── strings.xml
+│   │
+│   ├── build.gradle.kts
+│   └── proguard-rules.pro
 │
 ├── backend/
 │   ├── main.py
-│   ├── requirements.txt
-│   └── ...
 │
-├── controller-website/
-│   ├── src/
-│   ├── package.json
-│   └── ...
+├── gradle/
+│   ├── libs.versions.toml
+│   └── wrapper/
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
 │
 ├── .gitignore
-├── README.md
-└── LICENSE
+├── build.gradle.kts
+├── gradle.properties
+├── gradlew
+├── gradlew.bat
+├── live_phone_screen.png
+├── settings.gradle.kts
+└── README.md
 ```
 ## 🚀 Getting Started
 
